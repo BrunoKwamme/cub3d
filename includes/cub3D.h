@@ -3,6 +3,10 @@
 
 # include <stdio.h>
 # include <unistd.h>
-#include "../minilibx/mlx.h"
+# include <stdlib.h>
+# include <fcntl.h>
+# include "libft/includes/libft.h"
+# include "gnl/includes/get_next_line.h"
+# include "../minilibx/mlx.h"
 
 #endif

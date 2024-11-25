@@ -20,7 +20,7 @@ OBJS = $(FILTER_SRCS:%.c=$(DIR_OBJS)/%.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT_A) $(GNL_A) $(DIR_OBJS)
-	$(COMPILER) $(OBJS) $(LIBFT_A) -lreadline -o $(NAME)
+	$(COMPILER) $(OBJS) $(LIBFT_A) $(GNL_A) -o $(NAME)
 
 $(DIR_OBJS):
 	mkdir builds
@@ -37,6 +37,7 @@ $(DIR_OBJS)/%.o : %.c
 
 val: all
 	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+
 clean:
 	$(RM) $(DIR_OBJS)
 	cd includes/libft && make clean && cd ../..

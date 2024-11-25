@@ -6,7 +6,7 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:47:11 by bkwamme           #+#    #+#             */
-/*   Updated: 2024/11/25 19:48:23 by bkwamme          ###   ########.fr       */
+/*   Updated: 2024/11/25 20:26:26 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 
 int main ()
 {
-	printf("Hello, World !");
+	int 	fd;
+	char	*str;
+
+	fd = open ("gnl.txt", O_RDONLY);
+	while (str)
+	{
+		str = get_next_line(fd);
+		printf("%s", str);
+	}
 	return (0);
 }
