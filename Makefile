@@ -6,9 +6,8 @@ COMPILER = cc -Wall -Wextra -Werror
 DIR_OBJS = builds/
 DIR_SRCS = srcs/
 DIR_INCLUDES = includes/
-GNL_A = includes/gnl/get_next
+GNL_A = includes/gnl/gnl.a
 LIBFT_A = includes/libft/libft.a
-SUPP_FILE = readline.supp
 
 GET_SRCS = $(shell find $(DIR_SRCS))
 
@@ -20,7 +19,7 @@ OBJS = $(FILTER_SRCS:%.c=$(DIR_OBJS)/%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT_A) $(DIR_OBJS)
+$(NAME): $(OBJS) $(LIBFT_A) $(GNL_A) $(DIR_OBJS)
 	$(COMPILER) $(OBJS) $(LIBFT_A) -lreadline -o $(NAME)
 
 $(DIR_OBJS):
@@ -28,6 +27,9 @@ $(DIR_OBJS):
 
 $(LIBFT_A):
 	cd includes/libft && make && cd ../..
+
+$(GNL_A):
+	cd includes/gnl && make && cd ../..
 
 $(DIR_OBJS)/%.o : %.c
 	mkdir -p $(dir $@)
@@ -40,8 +42,6 @@ clean:
 	cd includes/libft && make clean && cd ../..
 
 fclean: clean
-	$(RM) $(NAME) $(DIR_OBJS) $(LIBFT_A)
-
-
+	$(RM) $(NAME) $(DIR_OBJS) $(LIBFT_A) $(GNL_A)
 
 re: fclean all

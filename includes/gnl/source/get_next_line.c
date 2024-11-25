@@ -6,11 +6,11 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 12:05:24 by bkwamme           #+#    #+#             */
-/*   Updated: 2024/02/05 10:26:52 by bkwamme          ###   ########.fr       */
+/*   Updated: 2024/11/25 20:03:06 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/get_next_line.h"
 
 static char	*put_rest(char *line, char *rest, int i)
 {
