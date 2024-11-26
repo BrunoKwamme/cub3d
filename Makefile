@@ -2,12 +2,14 @@ NAME = cub3D
 
 RM = rm -rf
 COMPILER = cc -Wall -Wextra -Werror
+MINILIBX_ARGS = -lXext -lX11 -lm
 
 DIR_OBJS = builds/
 DIR_SRCS = srcs/
 DIR_INCLUDES = includes/
 GNL_A = includes/gnl/gnl.a
 LIBFT_A = includes/libft/libft.a
+MINILIBX_A = minilibx/libmlx.a
 
 GET_SRCS = $(shell find $(DIR_SRCS))
 
@@ -19,8 +21,8 @@ OBJS = $(FILTER_SRCS:%.c=$(DIR_OBJS)/%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT_A) $(GNL_A) $(DIR_OBJS)
-	$(COMPILER) $(OBJS) $(LIBFT_A) $(GNL_A) -o $(NAME)
+$(NAME): $(OBJS) $(MINILIBX_A) $(LIBFT_A) $(GNL_A) $(DIR_OBJS)
+	$(COMPILER) $(OBJS) $(MINILIBX_A) $(MINILIBX_ARGS) $(LIBFT_A) $(GNL_A) -o $(NAME)
 
 $(DIR_OBJS):
 	mkdir builds
@@ -30,6 +32,9 @@ $(LIBFT_A):
 
 $(GNL_A):
 	cd includes/gnl && make && cd ../..
+
+$(MINILIBX_A):
+	cd minilibx && make && cd ..
 
 $(DIR_OBJS)/%.o : %.c
 	mkdir -p $(dir $@)
@@ -41,8 +46,10 @@ val: all
 clean:
 	$(RM) $(DIR_OBJS)
 	cd includes/libft && make clean && cd ../..
+	cd includes/gnl && make clean && cd ../..
+	cd minilibx/ && make clean && cd ..
 
 fclean: clean
-	$(RM) $(NAME) $(DIR_OBJS) $(LIBFT_A) $(GNL_A)
+	$(RM) $(NAME) $(DIR_OBJS) $(LIBFT_A) $(GNL_A) $(MINILIBX_A)
 
 re: fclean all

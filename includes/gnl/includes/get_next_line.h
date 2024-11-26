@@ -6,7 +6,7 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 12:08:00 by bkwamme           #+#    #+#             */
-/*   Updated: 2024/11/25 20:24:03 by bkwamme          ###   ########.fr       */
+/*   Updated: 2024/11/26 11:34:12 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 #  define BUFFER_SIZE 1
 # endif
 
+char	*ft_strjoin(char *s1, char *s2);
 char	*get_next_line(int fd);
+char	*ft_strchr(const char *s, int c);
+size_t	ft_strlen(const char *str);
 
 #endif
