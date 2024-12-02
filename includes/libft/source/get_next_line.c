@@ -6,13 +6,13 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 12:05:24 by bkwamme           #+#    #+#             */
-/*   Updated: 2024/11/25 20:03:06 by bkwamme          ###   ########.fr       */
+/*   Updated: 2024/11/28 15:48:57 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
+#include "../includes/libft.h"
 
-static char	*put_rest(char *line, char *rest, int i)
+char	*put_rest(char *line, char *rest, int i)
 {
 	int	x;
 
@@ -28,7 +28,8 @@ static char	*put_rest(char *line, char *rest, int i)
 	return (rest);
 }
 
-static char	*get_rest(char *line)
+
+char	*get_rest(char *line)
 {
 	int		i;
 	int		length;
@@ -48,7 +49,7 @@ static char	*get_rest(char *line)
 	return (put_rest(line, rest, i));
 }
 
-static char	*get_line(char *line)
+char	*get_line(char *line)
 {
 	char	*str;
 	int		i;
@@ -74,7 +75,7 @@ static char	*get_line(char *line)
 	return (str);
 }
 
-static char	*search_line(int fd)
+char	*search_line(int fd)
 {
 	char		*buffer;
 	char		*line;

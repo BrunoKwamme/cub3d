@@ -6,7 +6,7 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:47:11 by bkwamme           #+#    #+#             */
-/*   Updated: 2024/11/26 16:15:15 by bkwamme          ###   ########.fr       */
+/*   Updated: 2024/12/02 10:54:48 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,12 @@ void start_mlx ()
 	return (0);
 } */
 
-int main ()
+int	main(void)
 {
-	int		fd;
-	char	*str;
+	t_map	*map;
 
-	fd = open("./gnl.txt", O_RDONLY);
-	str = get_next_line(fd);
-	while (str)
-	{
-		printf("%s", str);
-		str = get_next_line(fd);
-	}
+	map = populate_map();
+	printf("north -> %ssouth ->%sweast -> %seast -> %s", map->no_texture, map->so_texture, map->we_texture, map->ea_texture);
+	free_map(&map);
 	return (0);
 }
