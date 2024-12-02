@@ -6,11 +6,12 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 00:25:52 by gabrfern          #+#    #+#             */
-/*   Updated: 2024/11/25 20:04:26 by bkwamme          ###   ########.fr       */
+/*   Updated: 2024/11/28 16:05:00 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
+
 
 int	ft_isspace(int c)
 {
