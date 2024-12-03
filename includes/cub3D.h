@@ -36,13 +36,16 @@ typedef struct s_map
 	int		ceiling;
 }				t_map;
 
-t_map	*populate_map(void);
-int		is_map_filled (t_map **map);
+t_map	*populate_map(char *argv);
+int		is_map_filled (t_map **map, int flag);
 int		populate_textures(t_map **map, char *map_input);
+//validation
+int argument_val(char **argv);
 
-//free_utils
+//utils
 void	free_str(char **str);
 void	free_str_arr(char **arr);
 void	free_map(t_map **map);
+void	put_error(char	*error_msg);
 
 #endif

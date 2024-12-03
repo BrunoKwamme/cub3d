@@ -6,7 +6,7 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:24:20 by bkwamme           #+#    #+#             */
-/*   Updated: 2024/12/02 10:57:29 by bkwamme          ###   ########.fr       */
+/*   Updated: 2024/12/03 12:40:29 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,32 @@ int	populate_textures(t_map **map, char *map_input)
 	return (0);
 }
 
-int	is_map_filled (t_map **map)
+int	is_map_filled (t_map **map, int flag)
 {
+	if (flag != 0)
+		return (1);
 	if (!(*map)->no_texture || !(*map)->so_texture
 		|| !(*map)->we_texture || !(*map)->ea_texture
 			|| !(*map)->floor || !(*map)->ceiling)
 		return (1);
 	return (0);
+}
+
+void	validation_error(t_map **map)
+{
+	if (!(*map)->ea_texture)
+		put_error("MISSING EAST TEXTURE");
+	if (!(*map)->no_texture)
+		put_error("MISSING NORTH TEXTURE");
+	if (!(*map)->we_texture)
+		put_error("MISSING WEST TEXTURE");
+	if (!(*map)->so_texture)
+		put_error("MISSING SOUTH TEXTURE");
+	if ((*map)->ceiling == 0)
+		put_error("MISSING CEILING COLOR");
+	if ((*map)->floor == 0)
+		put_error("MISSING FLOOR COLOR");
+	free_map(map);
 }
 
 void	malloc_map(t_map **map)
@@ -53,7 +72,7 @@ void	malloc_map(t_map **map)
 	(*map)->ceiling = 0;
 }
 
-t_map	*populate_map()
+t_map	*populate_map(char *argv)
 {
 	int		fd;
 	int		flag;
@@ -62,26 +81,29 @@ t_map	*populate_map()
 
 	malloc_map(&map);
 	flag = 0;
-	fd = open("./map1.cub", O_RDONLY);
+	fd = open(argv, O_RDONLY);
 	if (fd == -1)
-		return (ft_putendl_fd("FD: ERROR", 2), NULL);
+		return (put_error("BAD FD"), NULL);
 	map_input = get_next_line(fd);
 	while (map_input)
 	{
-		if (map_input && (ft_strncmp(map_input, "NO", 2) == 0
-			|| ft_strncmp(map_input, "SO", 2) == 0
-				|| ft_strncmp(map_input, "WE", 2) == 0
-					|| ft_strncmp(map_input, "EA", 2) == 0
-						|| ft_strncmp(map_input, "F", 1) == 0
-							|| ft_strncmp(map_input, "C", 1) == 0))
+		if (flag == 0 && (map_input &&
+			(ft_strncmp(map_input, "NO", 2) == 0
+				|| ft_strncmp(map_input, "SO", 2) == 0
+					|| ft_strncmp(map_input, "WE", 2) == 0
+						|| ft_strncmp(map_input, "EA", 2) == 0
+							|| ft_strncmp(map_input, "F", 1) == 0
+								|| ft_strncmp(map_input, "C", 1) == 0)))
 			flag += populate_textures(&map, map_input);
 		else
-			flag += is_map_filled(&map);
+			flag += is_map_filled(&map, flag);
 		free_str(&map_input);
 		map_input = get_next_line(fd);
 	}
 	close(fd);
 	free_str(&map_input);
+	if (flag != 0)
+		return (validation_error(&map), NULL);
 	return (map);
 }
 
