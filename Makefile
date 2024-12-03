@@ -37,7 +37,7 @@ $(DIR_OBJS)/%.o : %.c
 	$(COMPILER) -c $< -o $@
 
 val: all
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) $(MAP)
 
 clean:
 	$(RM) $(DIR_OBJS)
