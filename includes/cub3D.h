@@ -41,6 +41,9 @@ int		is_map_filled (t_map **map, int flag);
 int		populate_textures(t_map **map, char *map_input);
 //validation
 int argument_val(char **argv);
+int	populate_textures(t_map **map, char *map_input);
+int	is_element_filled (t_map **map, int flag);
+void	validation_error(t_map **map);
 
 //utils
 void	free_str(char **str);
