@@ -36,7 +36,7 @@ typedef struct s_map
 	int		ceiling[3];
 }				t_map;
 
-t_map	*populate_map(char *argv);
+t_map	*read_map(char *argv);
 int		is_map_filled (t_map **map, int flag);
 int		populate_textures(t_map **map, char *map_input);
 //validation

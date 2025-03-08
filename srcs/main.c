@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:47:11 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/03/08 16:14:58 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/03/08 16:39:14 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2 || argument_val(argv) != 0)
 		return (put_error("BAD INPUT"), 2);
-	map = populate_map(argv[1]);
+	map = read_map(argv[1]);
 	if (map != NULL)
 	{
 		printf("north -> %s\nsouth ->%s\nweast -> %s\neast -> %s\n", map->no_texture, map->so_texture, map->we_texture, map->ea_texture);
