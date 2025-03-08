@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_input_handle.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
+/*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 11:14:55 by bkwamme           #+#    #+#             */
-/*   Updated: 2024/12/03 10:38:35 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/03/06 22:06:24 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-#include "../../includes/cub3D.h"
+#include "cub3D.h"
 
  */

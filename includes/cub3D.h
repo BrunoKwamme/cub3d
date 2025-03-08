@@ -32,14 +32,15 @@ typedef struct s_map
 	char	*so_texture;
 	char	*we_texture;
 	char	*ea_texture;
-	int		floor;
-	int		ceiling;
+	int		floor[3];
+	int		ceiling[3];
 }				t_map;
 
 t_map	*populate_map(char *argv);
 int		is_map_filled (t_map **map, int flag);
 int		populate_textures(t_map **map, char *map_input);
 //validation
+void	validation_error(t_map **map);
 int argument_val(char **argv);
 
 //utils
@@ -47,5 +48,10 @@ void	free_str(char **str);
 void	free_str_arr(char **arr);
 void	free_map(t_map **map);
 void	put_error(char	*error_msg);
+void	malloc_map(t_map **map);
 
+
+//debug functions to exclude
+void	printing_arr(char **arr);
+void	printing_nbr_arr(int *arr);
 #endif

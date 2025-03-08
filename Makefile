@@ -1,14 +1,14 @@
 NAME = cub3D
 
+LIBFT_A = includes/libft/libft.a
 RM = rm -rf
-COMPILER = cc -Wall -Wextra -Werror
+COMPILER = cc -Wall -Wextra -Werror -I ./includes
 MINILIBX_ARGS = -lXext -lX11 -lm
+MINILIBX_A = minilibx/libmlx.a
 
 DIR_OBJS = builds/
 DIR_SRCS = srcs/
 DIR_INCLUDES = includes/
-LIBFT_A = includes/libft/libft.a
-MINILIBX_A = minilibx/libmlx.a
 
 GET_SRCS = $(shell find $(DIR_SRCS))
 
@@ -17,6 +17,8 @@ PRE-FILTER_SRCS = $(filter %.c, $(GET_SRCS))
 FILTER_SRCS = $(filter-out %testing.c, $(PRE-FILTER_SRCS))
 
 OBJS = $(FILTER_SRCS:%.c=$(DIR_OBJS)/%.o)
+
+MAP = map_default.cub
 
 all: $(NAME)
 
@@ -39,6 +41,10 @@ $(DIR_OBJS)/%.o : %.c
 val: all
 	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) $(MAP)
 
+compile: all
+	@echo "map is $(MAP)"
+	@./$(NAME) $(MAP)
+
 clean:
 	$(RM) $(DIR_OBJS)
 	cd includes/libft && make clean && cd ../..
@@ -48,3 +54,4 @@ fclean: clean
 	$(RM) $(NAME) $(DIR_OBJS) $(LIBFT_A) $(MINILIBX_A)
 
 re: fclean all
+
