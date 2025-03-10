@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
+/*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:47:11 by bkwamme           #+#    #+#             */
-/*   Updated: 2024/12/03 12:40:20 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/03/10 01:25:37 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,17 @@ int	main(int argc, char **argv)
 
 	if (argc != 2 || argument_val(argv) != 0)
 		return (put_error("BAD INPUT"), 2);
-	map = populate_map(argv[1]);
-	//printf("north -> %ssouth ->%sweast -> %seast -> %s", map->no_texture, map->so_texture, map->we_texture, map->ea_texture);
+	map = read_document(argv[1]);
+	if (map != NULL)
+	{
+		printf("north -> %s\nsouth ->%s\nweast -> %s\neast -> %s\n", map->no_texture, map->so_texture, map->we_texture, map->ea_texture);
+		printf("printing ceiling:\n");
+		printing_nbr_arr(map->ceiling, LIMIT_INT_STD);
+		printf("printing floor:\n");
+		printing_nbr_arr(map->floor, LIMIT_INT_STD);
+	}
+	else
+		printf("An error occurred\n");
 	if (map)
 		free_map(&map);
 	return (0);

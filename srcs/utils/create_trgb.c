@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   create_trgb.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
+/*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:14:47 by bkwamme           #+#    #+#             */
-/*   Updated: 2024/12/03 13:15:47 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/03/06 22:06:02 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3D.h"
+#include "cub3D.h"
 
 int	create_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char b)
 {
