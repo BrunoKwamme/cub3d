@@ -13,13 +13,50 @@ void	printing_arr(char **arr)
 
 }
 
+void	display_map_visual(int **arr, int reading_limit)
+{
+	int	i_arr;
+	int i;
 
-void	printing_nbr_arr(int *arr)
+	i_arr = 0;
+	while (arr[i_arr] != NULL)
+	{
+		i = 0;
+		while (arr[i_arr][i] != reading_limit)
+		{
+			if (arr[i_arr][i] != -1)
+				printf("%d  ", arr[i_arr][i]);
+			else
+				printf("%d ", arr[i_arr][i]);
+			i++;
+		}
+		printf("\n");
+		i_arr++;
+	}
+
+}
+
+void	printing_nbr_mult_arr(int **arr, int reading_limit)
 {
 	int	i;
 
 	i = 0;
-	while (i <= 2)
+	while (arr[i] != NULL)
+	{
+		printf("PRINTING VECTOR >> %d\n------------------------------\n", i);
+		printing_nbr_arr(arr[i], reading_limit);
+		i++;
+		printf("------------------------------\n");
+	}
+
+}
+
+void	printing_nbr_arr(int *arr, int reading_limit)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i] != reading_limit)
 	{
 		printf("arr element is: %d\n",arr[i]);
 		i++;

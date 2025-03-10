@@ -39,7 +39,7 @@ $(DIR_OBJS)/%.o : %.c
 	$(COMPILER) -c $< -o $@
 
 val: all
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) $(MAP)
+	valgrind --leak-check=full --show-leak-kinds=all -s ./$(NAME) $(MAP)
 
 compile: all
 	@echo "map is $(MAP)"

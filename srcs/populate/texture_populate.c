@@ -45,6 +45,7 @@ static void	processe_numbers(char *dir, int (*element)[], char *map_input)
 		(*element)[i] = ft_atoi(splited_nbs[i]);
 		i++;
 	}
+	(*element)[i] = LIMIT_INT_STD;
 	free_str(&processed_str);
 	free_str_arr(splited_nbs);
 }

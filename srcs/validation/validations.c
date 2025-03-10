@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 09:58:00 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/03/08 16:04:59 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:40:03 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int argument_val(char **argv)
 	return (0);
 }
 
-void	validation_error(t_map **map)
+void	validation_error(int fd, t_map **map)
 {
 	if (!(*map)->ea_texture)
 		put_error("MISSING EAST TEXTURE");
@@ -63,6 +63,7 @@ void	validation_error(t_map **map)
 	if ((*map)->floor[0] == -1)
 		put_error("MISSING FLOOR COLOR");
 	printf("VALIDATION COMPLETE!\n");
+	close(fd);
 	free_map(map);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:47:42 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/03/08 16:06:02 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/03/10 02:13:03 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@ void	free_str(char **str)
 	*str = NULL;
 }
 
+void	free_int(int *i)
+{
+	if (!i)
+		return ;
+	free(i);
+}
+
 void	free_str_arr(char **arr)
 {
 	int	i;
@@ -52,13 +59,45 @@ void	free_str_arr(char **arr)
 	arr = NULL;
 }
 
+void	free_int_arr(int **arr)
+{
+	int	i;
+
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		free_int(arr[i]);
+		i++;
+	}
+	free(arr);
+	arr = NULL;
+}
+
+void	free_colors_args(int (*arr)[3])
+{
+	int	i;
+
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		free_int(arr[i]);
+		i++;
+	}
+	free(arr);
+	arr = NULL;
+}
+
 void	free_map(t_map **map)
 {
 	free_str(&(*map)->no_texture);
 	free_str(&(*map)->so_texture);
 	free_str(&(*map)->we_texture);
 	free_str(&(*map)->ea_texture);
-	free_str_arr((*map)->map_layout);
+	free_int_arr((*map)->map_layout);
 	free(*map);
 	*map = NULL;
 }
