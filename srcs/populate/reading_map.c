@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:24:20 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/03/10 02:25:25 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/03/20 00:29:05 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,16 @@ int	read_map_info(int fd, t_map **map)
 	while (map_info && !(line_empty(map_info)))
 	{
 		// printf("PRINTING MAP INFORMATION -> %s\n", map_info);
-		map_allocation(map, map_info);
+		if (map_allocation(map, map_info) == 0)
+		{
+			free_str(&map_info);
+			return (0);
+		}
 		free_str(&map_info);
 		map_info = get_next_line(fd);
 	}
 	free_str(&map_info);
-	display_map_visual((*map)->map_layout, LIMIT_INT_STD);
+	turn_map_in_sqr(map);
 	return (1);
 }
 
@@ -96,6 +100,8 @@ t_map	*read_document(char *argv)
 		return (put_error("BAD FD"), NULL);
 	if (read_basic_info(fd, &map) == 0 || read_map_info(fd, &map) == 0)
 		return (validation_error(fd, &map), NULL);
+	flood_fill(map);
+
 	close(fd);
 	printf("passed basic info\n");
 	return (map);

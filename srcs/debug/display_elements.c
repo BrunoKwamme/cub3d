@@ -24,14 +24,27 @@ void	display_map_visual(int **arr, int reading_limit)
 		i = 0;
 		while (arr[i_arr][i] != reading_limit)
 		{
-			if (arr[i_arr][i] != -1)
-				printf("%d  ", arr[i_arr][i]);
+			if(arr[i_arr][i] < 10 && arr[i_arr][i] > -1)
+				printf("%d   ", arr[i_arr][i]);
 			else
-				printf("%d ", arr[i_arr][i]);
+				printf("%d  ", arr[i_arr][i]);
 			i++;
 		}
 		printf("\n");
 		i_arr++;
+	}
+
+}
+
+void	printing_coordinates(t_flood *vectors)
+{
+	int i;
+
+	i = 0;
+	while (vectors != NULL)
+	{
+		printf("iter nbr: %d | x : %d and y: %d\n", i, vectors->vector[1], vectors->vector[0]);
+		vectors = vectors->next;
 	}
 
 }

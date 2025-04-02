@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:47:42 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/03/10 02:13:03 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/03/13 10:31:57 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ void	malloc_map(t_map **map)
 	(*map)->ceiling[0] = -1;
 	(*map)->ceiling[1] = -1;
 	(*map)->ceiling[2] = -1;
+	(*map)->person_pos[0] = -1;
+	(*map)->person_pos[1] = -1;
+
 }
 
 void	free_str(char **str)
