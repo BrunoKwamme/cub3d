@@ -9,7 +9,7 @@ MINILIBX_A = minilibx/libmlx.a
 DIR_OBJS = builds/
 DIR_SRCS = srcs/
 DIR_INCLUDES = includes/
-
+MAPS_DIR = $(DIR_SRCS)/maps/
 GET_SRCS = $(shell find $(DIR_SRCS))
 
 PRE-FILTER_SRCS = $(filter %.c, $(GET_SRCS))
@@ -39,11 +39,11 @@ $(DIR_OBJS)/%.o : %.c
 	$(COMPILER) -c $< -o $@
 
 val: all
-	valgrind --leak-check=full --show-leak-kinds=all -s ./$(NAME) $(MAP)
+	valgrind --leak-check=full --show-leak-kinds=all -s ./$(NAME) $(MAPS_DIR)$(MAP)
 
 compile: all
 	@echo "map is $(MAP)"
-	@./$(NAME) $(MAP)
+	@./$(NAME) $(MAPS_DIR)$(MAP)
 
 clean:
 	$(RM) $(DIR_OBJS)

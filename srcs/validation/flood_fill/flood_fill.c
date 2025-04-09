@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:14:04 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/04/02 00:09:47 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/04/09 01:10:02 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static void add_vector_to_node(t_flood **new_vec, int y, int x)
 
 int verify_vector(int **layout, int y, int x, t_flood **new_vec)
 {
-	if (layout[y][x] == GROUND || layout[y][x] == WALL)
+	if (layout[y][x] == GROUND || layout[y][x] == WALL ||
+	(layout[y][x] >= 2 && layout[y][x] <= 5))
 		return (1);
 	else if (layout[y][x] == GROUND_STG || layout[y][x] == WALL_STG)
 	{
@@ -60,22 +61,25 @@ int verify_vector(int **layout, int y, int x, t_flood **new_vec)
 	return (0);
 }
 
-int	verify_arround(int **layout, int *vector, int max_vector, t_flood **new_vec)
+int	verify_around(int **layout, int *vector, int max_vector, t_flood **new_vec)
 {
 	(void)max_vector;
+	int count;
 
-
-	verify_vector(layout, vector[0], vector[1], new_vec);
-	verify_vector(layout, vector[0], vector[1] - 1, new_vec);
-	verify_vector(layout, vector[0], vector[1] + 1, new_vec);
-	verify_vector(layout, vector[0] + 1, vector[1], new_vec);
-	verify_vector(layout, vector[0] - 1, vector[1], new_vec);
-	verify_vector(layout, vector[0] - 1, vector[1] - 1, new_vec);
-	verify_vector(layout, vector[0] + 1, vector[1] + 1, new_vec);
-	verify_vector(layout, vector[0] + 1, vector[1] - 1, new_vec);
-	verify_vector(layout, vector[0] - 1, vector[1] + 1, new_vec);
-	// MAKE A FUNCTION THAT REVEALS THE VALUE OF NEW VEC
-	if (*new_vec != NULL)
+	count = 0;
+	count += verify_vector(layout, vector[0], vector[1], new_vec);
+	count += verify_vector(layout, vector[0], vector[1] - 1, new_vec);
+	count += verify_vector(layout, vector[0], vector[1] + 1, new_vec);
+	count += verify_vector(layout, vector[0] + 1, vector[1], new_vec);
+	count += verify_vector(layout, vector[0] - 1, vector[1], new_vec);
+	count += verify_vector(layout, vector[0] - 1, vector[1] - 1, new_vec);
+	count += verify_vector(layout, vector[0] + 1, vector[1] + 1, new_vec);
+	count += verify_vector(layout, vector[0] + 1, vector[1] - 1, new_vec);
+	count += verify_vector(layout, vector[0] - 1, vector[1] + 1, new_vec);
+	printf("COUNT IS: %d\n", count);
+	if (count < 9)
+		return (-1);
+	if ((*new_vec) != NULL)
 		return (1);
 	return (0);
 }
@@ -86,15 +90,16 @@ int	flood_fill(t_map *map)
 {
 	int	*pos;
 	int max_sz;
+	int res;
 
 	max_sz = map_max_hsize(map->map_layout);
 	pos = get_position_vector(map, STAGING);
 	printf("PRINTING POS VECTOR\n");
 	printing_nbr_arr(pos, LIMIT_INT_STD);
 	// display_map_visual(map->map_layout, LIMIT_INT_STD);
-	do_flood_fill(pos, map->map_layout, max_sz);
+	res = do_flood_fill(pos, map->map_layout, max_sz);
 
 	free(pos);
 	pos = NULL;
-	return (1);
+	return res;
 }

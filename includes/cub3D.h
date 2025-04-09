@@ -93,7 +93,7 @@ void	turn_map_in_sqr(t_map **map);
 
 //flood fill algorithms
 int		flood_fill(t_map *map);
-int		verify_arround(int **layout, int *vector, int max_vector, t_flood **new_vec);
+int		verify_around(int **layout, int *vector, int max_vector, t_flood **new_vec);
 int 	verify_vector(int **layout, int y, int x, t_flood **new_vec);
 int 	is_new_vector(t_flood *new_vec, int y, int x);
 int		do_flood_fill(int *first_pos, int **map_layout, int max_sz);

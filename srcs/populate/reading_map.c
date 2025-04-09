@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:24:20 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/03/20 00:29:05 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/04/09 01:30:28 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,13 @@ t_map	*read_document(char *argv)
 		return (put_error("BAD FD"), NULL);
 	if (read_basic_info(fd, &map) == 0 || read_map_info(fd, &map) == 0)
 		return (validation_error(fd, &map), NULL);
-	flood_fill(map);
+	if (flood_fill(map) == -1)
+	{
+		put_error("MAP DIDN't passed flood fill");
+		free_map(&map);
+		close(fd);
+		return (NULL);
+	}
 
 	close(fd);
 	printf("passed basic info\n");
