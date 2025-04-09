@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:05:53 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/04/02 16:19:27 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/04/08 23:39:03 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,14 @@ void	new_node_flood(t_flood **new_vec, int *vector)
 
 void free_flood_vector(t_flood **erase)
 {
+	t_flood *next;
+	if (!(*erase))
+		return ;
 	while ((*erase))
 	{
+		next = (*erase)->next;
 		free((*erase));
-		(*erase) = (*erase)->next;
+		*erase = next;
 	}
 }
 
@@ -71,20 +75,21 @@ t_flood	*process_spaces(t_flood *vectors, int **layout, int max_vector)
 	t_flood *new_zeros;
 	t_flood *head;
 
-	head = vectors;
+	if (!vectors)
+		return (NULL);
 	new_zeros = NULL;
+	head = vectors;
 	while (vectors)
 	{
 		if (verify_arround(layout, vectors->vector, max_vector, &new_zeros) == 0)
 		{
-			printf("ENTERING HERE. verify arround was 0");
+			printf("ENTERING HERE. verify arround was 0\n");
 			free_flood_vector(&new_zeros);
-			new_zeros = (NULL);
+			new_zeros = NULL;
 		}
 		vectors = vectors->next;
 	}
 	free_flood_vector(&head);
-	printf("FINAL OF PROCESS SPACES :\nprinting vectors\n");
 	printing_coordinates(new_zeros);
 	return (new_zeros);
 }
@@ -103,7 +108,6 @@ int	do_flood_fill(int *first_pos, int **map_layout, int max_sz)
 		printf("INSIDE WHILE OF FLOOD_FILL -\n");
 		vectors = process_spaces(vectors, map_layout, max_sz);
 		printf("SPACES PROCESSED - execution %d\n--------------------------------\n\n", i);
-		// VERIFY THE OUTPUT OF VECTORS HERE.
 		display_map_visual(map_layout, LIMIT_INT_STD);
 		printf("EXECUTION ENDL\n--------------------------------\n\n");
 	}
