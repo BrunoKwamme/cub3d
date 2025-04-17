@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:47:11 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/03/10 01:25:37 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/03/20 01:22:12 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	main(int argc, char **argv)
 		printing_nbr_arr(map->ceiling, LIMIT_INT_STD);
 		printf("printing floor:\n");
 		printing_nbr_arr(map->floor, LIMIT_INT_STD);
+		printf("MAJOR SCOPE\n");
+		display_map_visual((map)->map_layout, LIMIT_INT_STD);
 	}
 	else
 		printf("An error occurred\n");

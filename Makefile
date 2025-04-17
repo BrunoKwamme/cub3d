@@ -9,8 +9,9 @@ MINILIBX_A = minilibx/libmlx.a
 DIR_OBJS = builds/
 DIR_SRCS = srcs/
 DIR_INCLUDES = includes/
-
+MAPS_DIR = $(DIR_SRCS)/maps/
 GET_SRCS = $(shell find $(DIR_SRCS))
+ALL_MAPS = $(filter %.cub, $(shell find $(MAPS_DIR)))
 
 PRE-FILTER_SRCS = $(filter %.c, $(GET_SRCS))
 
@@ -39,11 +40,32 @@ $(DIR_OBJS)/%.o : %.c
 	$(COMPILER) -c $< -o $@
 
 val: all
-	valgrind --leak-check=full --show-leak-kinds=all -s ./$(NAME) $(MAP)
+	valgrind --leak-check=full --show-leak-kinds=all -s ./$(NAME) $(MAPS_DIR)$(MAP)
 
 compile: all
 	@echo "map is $(MAP)"
-	@./$(NAME) $(MAP)
+	@./$(NAME) $(MAPS_DIR)$(MAP)
+
+echo-maps:
+	@for file in $(ALL_MAPS); do\
+		echo "Validando $$file";\
+		if ./$(NAME) $$file | grep -q "MAJOR SCOPE";\
+		then \
+			echo "O MAPA FOI VALIDADO"; \
+		else \
+			echo "O MAPA NÃO FOI VALIDADO"; \
+		fi \
+		done
+
+assert-map:
+	@echo "map is $(MAP)"
+	@if ./$(NAME) $(MAPS_DIR)$(MAP) | grep -q "MAJOR SCOPE";\
+		then \
+			echo "O MAPA FOI VALIDADO"; \
+		else \
+			echo "O MAPA NÃO FOI VALIDADO"; \
+		fi \
+
 
 clean:
 	$(RM) $(DIR_OBJS)
