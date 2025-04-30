@@ -24,11 +24,16 @@ void	display_map_visual(int **arr, int reading_limit)
 		i = 0;
 		while (arr[i_arr][i] != reading_limit)
 		{
+			if (arr[i_arr][i] == 1)
+				printf("\033[31m");
+			if (arr[i_arr][i] >= NORTH && arr[i_arr][i] <= WEST)
+				printf("\033[0;32m");
 			if(arr[i_arr][i] < 10 && arr[i_arr][i] > -1)
 				printf("%d   ", arr[i_arr][i]);
 			else
 				printf("%d  ", arr[i_arr][i]);
 			i++;
+			printf("\033[0m");
 		}
 		printf("\n");
 		i_arr++;

@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 01:18:24 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/04/09 01:20:52 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/04/29 23:21:18 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 
 int main()
 {
-	printf("%p\n", NULL);
+	char *test = "lala";
+	printf("test -> %s\n", test);
 }
