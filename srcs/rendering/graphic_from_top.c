@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 22:58:25 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/04/30 00:58:02 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/04/30 01:59:02 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void	old_start_mlx (t_map **map)
 
 void my_mlx_start(t_map **map, t_data *img)
 {
-	img->x = 31;
-	img->y = 31;
+// 	img->x = 31;
+// 	img->y = 31;
 	img->relative_path = "./assets/grass.xpm";
 	printf("relative path -> %s\n", img->relative_path);
 	img->color = 0x00FF0000;
@@ -95,6 +95,25 @@ void my_mlx_start(t_map **map, t_data *img)
 	img->mlx_win = mlx_new_window(img->mlx, 1920, 1080, "Hello, World!");
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
 	convert_arr_in_map(map, img);
+	void *second_img = mlx_new_image(img->mlx, 16, 16);
+	int *buffer = (int *)mlx_get_data_addr(second_img, &img->bits_per_pixel, &img->line_length, &img->endian);
+	int line_bytes = img->line_length / 4;
+	int x = 0;
+	int y = 0;
+	int color = 0xFF0000;
+	while (y <= 16)
+	{
+		x = 0;
+		while (x <= 16)
+		{
+			buffer[(y * line_bytes) + x] = color;
+			x++;
+		}
+		y++;
+	}
+	printf("person position x and y -> %d and %d\n", (*map)->person_pos[1], (*map)->person_pos[0]);
+	printf("WITH OPERATIONS > x and y -> %d and %d\n", (*map)->person_pos[1] * 32, (*map)->person_pos[0] * 32);
+	mlx_put_image_to_window(img->mlx, img->mlx_win, second_img, ((*map)->person_pos[1] * 32) + 8, ((*map)->person_pos[0] * 32) + 8);
 	mlx_hook(img->mlx_win, 2, 1L<<0, my_mlx_close_window, img);
 
 }
