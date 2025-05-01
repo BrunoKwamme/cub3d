@@ -66,7 +66,9 @@ assert-map:
 			echo "O MAPA NÃO FOI VALIDADO"; \
 		fi \
 
-
+testing:
+	$(COMPILER) ./srcs/testing/testing.c $(MINILIBX_A) $(MINILIBX_ARGS) $(LIBFT_A) -o testing_$(NAME)
+	./testing_$(NAME)
 clean:
 	$(RM) $(DIR_OBJS)
 	cd includes/libft && make clean && cd ../..

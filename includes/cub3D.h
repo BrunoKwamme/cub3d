@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/29 23:07:29 by gabrfern          #+#    #+#             */
+/*   Updated: 2025/04/30 00:57:44 by gabrfern         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -28,6 +40,9 @@ typedef struct	s_data
 #ifndef LIMIT_INT_STD
 #define LIMIT_INT_STD -100
 # endif
+
+#define RESET   "\033[0m";
+#define RED     "\033[31m";
 
 typedef struct s_map
 {
@@ -118,5 +133,12 @@ void	printing_nbr_arr(int *arr, int reading_limit);
 void	printing_nbr_mult_arr(int **arr, int reading_limit);
 void	display_map_visual(int **arr, int reading_limit);
 void	printing_coordinates(t_flood *vectors);
+
+//graphic displays of the map
+void	old_start_mlx (t_map **map);
+void	convert_arr_in_map(t_map **map, t_data *img);
+int		my_mlx_close_window(int keycode, t_data *img);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	my_mlx_start(t_map **map, t_data *img);
 #endif
 
