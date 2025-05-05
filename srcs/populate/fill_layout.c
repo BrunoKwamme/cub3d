@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:23:48 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/03/19 21:58:53 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/04 16:34:06 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	map_max_hsize(int **arr)
 	i = 0;
 	max_v = 0;
 	temp_v = 0;
-
 	while (i < get_size_map(arr))
 	{
 		temp_v = int_arr_len(arr[i], LIMIT_INT_STD);
@@ -64,17 +63,19 @@ static void fill_with_empty(int **line, int max_sz)
 	(*line)[i] = LIMIT_INT_STD;
 }
 
-void	turn_map_in_sqr(t_map **map)
+void	turn_map_in_sqr(t_map *map)
 {
 	int		i;
 	int		max_sz;
 
-	max_sz = map_max_hsize((*map)->map_layout);
+	max_sz = map_max_hsize((map)->map_layout);
+	(map)->horizontal_size = max_sz;
 	i = 0;
-	while ((*map)->map_layout[i] != NULL)
+	while ((map)->map_layout[i] != NULL)
 	{
-		if (int_arr_len((*map)->map_layout[i], LIMIT_INT_STD) < max_sz)
-			fill_with_empty(&(*map)->map_layout[i], max_sz);
+		if (int_arr_len((map)->map_layout[i], LIMIT_INT_STD) < max_sz)
+			fill_with_empty(&(map)->map_layout[i], max_sz);
 		i++;
 	}
+	(map)->vertical_size = i;
 }

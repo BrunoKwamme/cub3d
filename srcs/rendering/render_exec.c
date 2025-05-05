@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_error.c                                        :+:      :+:    :+:   */
+/*   render_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 12:33:45 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/05/04 18:05:27 by gabrfern         ###   ########.fr       */
+/*   Created: 2025/05/04 18:52:53 by gabrfern          #+#    #+#             */
+/*   Updated: 2025/05/04 20:21:44 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	put_error(char	*error_msg)
+void	set_render_info(t_instance *instance)
 {
-	ft_putendl_fd("Error", 2);
-	ft_putendl_fd(error_msg, 2);
-	return (0);
+	instance->mlx = mlx_init();
+	instance->win = mlx_new_window(instance->mlx, instance->win_width, instance->win_height, "Cub3d");
+
+	load_texture_buffer(instance);
 }

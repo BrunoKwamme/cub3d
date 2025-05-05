@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:24:20 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/04/09 01:30:28 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/04 20:38:25 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	verify_entering(int flag, char *map_input)
 	return (0);
 }
 
-static int read_basic_info(int fd, t_map **map)
+static int read_basic_info(int fd, t_instance *inst)
 {
 	char 	*map_info;
 	int		flag;
@@ -49,8 +49,8 @@ static int read_basic_info(int fd, t_map **map)
 	while (map_info)
 	{
 		if (verify_entering(flag, map_info))
-			populate_textures(map, map_info);
-		flag += is_map_filled(map, flag);
+			populate_textures(&(inst)->texture, map_info);
+		flag += is_map_filled(&(inst)->texture, flag);
 		if (flag > 0)
 		{
 			free_str(&map_info);
@@ -63,7 +63,7 @@ static int read_basic_info(int fd, t_map **map)
 	return (0);
 }
 
-int	read_map_info(int fd, t_map **map)
+static int	read_map_info(int fd, t_map *map)
 {
 	char	*map_info;
 
@@ -89,26 +89,24 @@ int	read_map_info(int fd, t_map **map)
 	return (1);
 }
 
-t_map	*read_document(char *argv)
+int	read_document(char *argv, t_instance *inst)
 {
 	int		fd;
-	t_map	*map;
 
-	malloc_map(&map);
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
-		return (put_error("BAD FD"), NULL);
-	if (read_basic_info(fd, &map) == 0 || read_map_info(fd, &map) == 0)
-		return (validation_error(fd, &map), NULL);
-	if (flood_fill(map) == -1)
+		return (put_error("BAD FD"));
+	if (read_basic_info(fd, inst) == 0 || read_map_info(fd, &(inst->map)) == 0)
+			return (validation_error(fd, inst));
+
+	if (flood_fill(&(inst->map)) == -1)
 	{
 		put_error("MAP DIDN't passed flood fill");
-		free_map(&map);
+		free_map(&(inst->map));
 		close(fd);
-		return (NULL);
+		return (0);
 	}
-
 	close(fd);
 	printf("passed basic info\n");
-	return (map);
+	return (1);
 }

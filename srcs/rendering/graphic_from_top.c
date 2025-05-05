@@ -6,36 +6,36 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 22:58:25 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/04/30 01:59:02 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/04 19:54:20 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+/*
+include "cub3D.h"
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = data->addr + (y * data->size_line + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
-int	my_mlx_close_window(int keycode, t_data *img)
+int	my_mlx_close_window(int keycode, t_mlx_instance *mlx)
 {
 	printf("key pressed -> %d\n", keycode);
 	if (keycode == 65307)
 	{
-		mlx_destroy_image(img->mlx, img->img);
-		mlx_destroy_window(img->mlx, img->mlx_win);
-		mlx_destroy_display(img->mlx);
-		free(img->mlx);
+		mlx_destroy_window(mlx->instance, mlx->window);
+		mlx_destroy_display(mlx->instance);
+		free(mlx->instance);
 
 		exit(1);
 	}
 	return (0);
 }
 
-void convert_arr_in_map(t_map **map, t_data *img)
+void	convert_arr_in_map(t_map **map, t_mlx_instance *mlx, t_scene *scene)
 {
 	int	i_arr;
 	int i;
@@ -52,69 +52,104 @@ void convert_arr_in_map(t_map **map, t_data *img)
 			if((*map)->map_layout[i_arr][i] < 10 && (*map)->map_layout[i_arr][i] > -1)
 			{
 				if((*map)->map_layout[i_arr][i] == 1)
-					mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, x_mapping, y_mapping);
-				}
-			x_mapping = x_mapping + 32;
+					mlx_put_image_to_window(mlx->instance, mlx->window, scene->img, x_mapping, y_mapping);
+			}
+			x_mapping = x_mapping + scene->img_width;
 			i++;
 		}
-		y_mapping = y_mapping + 32;
+		y_mapping = y_mapping + scene->img_height;
 		i_arr++;
 	}
 }
 
-void	old_start_mlx (t_map **map)
+void texture_put(t_map **map, t_mlx_instance *mlx, t_scene *scene)
 {
-	t_data	img;
+	int	i_arr;
+	int i;
+	int x_mapping = 0;
+	int y_mapping = 0;
 
-	img.x = 31;
-	img.y = 31;
-	img.relative_path = "./assets/grass.xpm";
-	printf("relative path -> %s\n", img.relative_path);
-	img.color = 0x00FF0000;
-	img.mlx = mlx_init();
-	img.img = mlx_xpm_file_to_image(img.mlx, img.relative_path, &img.img_width, &img.img_height);
-	//img.img = mlx_new_image(img.mlx, 640, 480);
-	img.mlx_win = mlx_new_window(img.mlx, 1920, 1080, "Hello, World!");
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	my_mlx_pixel_put(&img, img.x, img.y, img.color);
-	convert_arr_in_map(map, &img);
-	//mlx_put_image_to_window(img.mlx, img.mlx_win, img.img, 40, 0);
-	mlx_hook(img.mlx_win, 2, 1L<<0, my_mlx_close_window, &img);
-	mlx_loop(img.mlx);
+	i_arr = 0;
+	while ((*map)->map_layout[i_arr] != NULL)
+	{
+		x_mapping = 0;
+		i = 0;
+		while ((*map)->map_layout[i_arr][i] != LIMIT_INT_STD)
+		{
+			if((*map)->map_layout[i_arr][i] < 10 && (*map)->map_layout[i_arr][i] > -1)
+			{
+				if((*map)->map_layout[i_arr][i] == 1)
+					mlx_put_image_to_window(mlx->instance, mlx->window, scene->img, x_mapping, y_mapping);
+			}
+			x_mapping = x_mapping + scene->img_width;
+			i++;
+		}
+		y_mapping = y_mapping + scene->img_height;
+		i_arr++;
+	}
 }
 
-void my_mlx_start(t_map **map, t_data *img)
+t_scene	generate_image_info(t_mlx_instance *mlx, int img_width, int img_height, char *relative_path)
 {
-// 	img->x = 31;
-// 	img->y = 31;
-	img->relative_path = "./assets/grass.xpm";
-	printf("relative path -> %s\n", img->relative_path);
-	img->color = 0x00FF0000;
-	img->mlx = mlx_init();
-	img->img = mlx_xpm_file_to_image(img->mlx, img->relative_path, &img->img_width, &img->img_height);
-	img->mlx_win = mlx_new_window(img->mlx, 1920, 1080, "Hello, World!");
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-	convert_arr_in_map(map, img);
-	void *second_img = mlx_new_image(img->mlx, 16, 16);
-	int *buffer = (int *)mlx_get_data_addr(second_img, &img->bits_per_pixel, &img->line_length, &img->endian);
-	int line_bytes = img->line_length / 4;
-	int x = 0;
-	int y = 0;
-	int color = 0xFF0000;
-	while (y <= 16)
+	t_scene	scene;
+
+	printf("ENTERED ON GENERATE IMAGE INFO\n");
+	scene.img_width= img_width;
+	scene.img_height= img_height;
+	scene.relative_path = relative_path;
+	if (relative_path != NULL)
+		scene.img = mlx_xpm_file_to_image(mlx->instance, scene.relative_path, &scene.img_width, &scene.img_height);
+	else
+		scene.img = mlx_new_image(mlx->instance, scene.img_width, scene.img_height);
+
+	scene.ch_addr = mlx_get_data_addr(scene.img, &scene.bits_per_pixel, &scene.size_line, &scene.endian);
+	scene.int_addr = (int *)scene.ch_addr;
+	return scene;
+}
+
+
+void	generate_first_image(t_mlx_instance *mlx, t_map **map)
+{
+	t_scene	map_scene;
+	t_scene	player;
+	int		x;
+	int		y;
+	int color;
+
+	y = 0;
+	x = 0;
+	color = 0xFF0000;
+
+	map_scene = generate_image_info(mlx, WIN_WIDTH, WIN_HEIGHT, NULL);
+	player = generate_image_info(mlx, (WIN_WIDTH/(*map)->horizontal_size)/2, (WIN_HEIGHT/(*map)->vertical_size)/2, NULL);
+	convert_arr_in_map(map, mlx, &map_scene);
+	while (y <= player.img_height)
 	{
 		x = 0;
-		while (x <= 16)
+		while (x <= player.img_width)
 		{
-			buffer[(y * line_bytes) + x] = color;
+			player.int_addr[(y * (player.size_line/4)) + x] = color;
 			x++;
 		}
 		y++;
 	}
 	printf("person position x and y -> %d and %d\n", (*map)->person_pos[1], (*map)->person_pos[0]);
 	printf("WITH OPERATIONS > x and y -> %d and %d\n", (*map)->person_pos[1] * 32, (*map)->person_pos[0] * 32);
-	mlx_put_image_to_window(img->mlx, img->mlx_win, second_img, ((*map)->person_pos[1] * 32) + 8, ((*map)->person_pos[0] * 32) + 8);
-	mlx_hook(img->mlx_win, 2, 1L<<0, my_mlx_close_window, img);
-
+	mlx_put_image_to_window(
+		mlx->instance, mlx->window, player.img,
+		(*map)->person_pos[1] * (player.img_width),
+		(*map)->person_pos[0] * (player.img_height));
+	mlx_hook(mlx->window, 2, 1L<<0, my_mlx_close_window, &map_scene);
 }
 
+void	my_mlx_create_main(t_map **map)
+{
+	t_mlx_instance	mlx;
+
+	mlx.instance = mlx_init();
+	mlx.window = mlx_new_window(mlx.instance, WIN_WIDTH, WIN_HEIGHT, "Hello, World!");
+
+	generate_first_image(&mlx, map);
+	mlx_loop(mlx.instance);
+}
+*/

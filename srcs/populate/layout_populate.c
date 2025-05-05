@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 21:44:23 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/03/20 00:57:06 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/04 16:31:34 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	fill_line(int **temp, char *line_fill)
 }
 
 
-int	map_allocation(t_map **map, char *map_info)
+int	map_allocation(t_map *map, char *map_info)
 {
 	int		*temp_convert;
 

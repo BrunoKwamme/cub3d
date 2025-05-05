@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:05:53 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/04/09 01:33:35 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/04 20:33:18 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	new_node_flood(t_flood **new_vec, int *vector)
 	while ((*new_vec)->next != NULL)
 	{
 		(*new_vec) = (*new_vec)->next;
-		printf("i went next\n");
+		// printf("i went next\n");
 	}
 	(*new_vec)->next = create_flood_vector(vector, head);
 	*new_vec = head;
@@ -112,24 +112,24 @@ t_flood	*process_spaces(t_flood *vectors, int **layout, int max_vector)
 int	do_flood_fill(int *first_pos, int **map_layout, int max_sz)
 {
 	t_flood *vectors;
-	int		i;
+	// int		i;
 	(void)max_sz;
 
-	i = 0;
+	// i = 0;
 	vectors = create_flood_vector(first_pos, NULL);
-	printf("OUT WHILE OF FLOOD_FILL - \n");
+	// printf("OUT WHILE OF FLOOD_FILL - \n");
 	while (vectors)
 	{
-		printf("INSIDE WHILE OF FLOOD_FILL -\n");
+		// printf("INSIDE WHILE OF FLOOD_FILL -\n");
 		vectors = process_spaces(vectors, map_layout, max_sz);
 		if (vectors && vectors->vector[0] < 0)
 		{
 			free_flood_vector(&vectors);
 			return (-1);
 		}
-		printf("SPACES PROCESSED - execution %d\n--------------------------------\n\n", i);
-		display_map_visual(map_layout, LIMIT_INT_STD);
-		printf("EXECUTION ENDL\n--------------------------------\n\n");
+		// printf("SPACES PROCESSED - execution %d\n--------------------------------\n\n", i);
+		// display_map_visual(map_layout, LIMIT_INT_STD);
+		// printf("EXECUTION ENDL\n--------------------------------\n\n");
 	}
 	free_flood_vector(&vectors);
 	return (1);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validations.c                                      :+:      :+:    :+:   */
+/*   doc_validations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 09:58:00 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/03/08 18:40:03 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/04 19:24:10 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,32 +48,33 @@ int argument_val(char **argv)
 	return (0);
 }
 
-void	validation_error(int fd, t_map **map)
+int	validation_error(int fd, t_instance *inst)
 {
-	if (!(*map)->ea_texture)
+	if (!(inst->texture).east_path)
 		put_error("MISSING EAST TEXTURE");
-	if (!(*map)->no_texture)
+	if (!(inst->texture).north_path)
 		put_error("MISSING NORTH TEXTURE");
-	if (!(*map)->we_texture)
+	if (!(inst->texture).west_path)
 		put_error("MISSING WEST TEXTURE");
-	if (!(*map)->so_texture)
+	if (!(inst->texture).south_path)
 		put_error("MISSING SOUTH TEXTURE");
-	if ((*map)->ceiling[0] == -1)
+	if ((inst->texture).ceiling[0] == -1)
 		put_error("MISSING CEILING COLOR");
-	if ((*map)->floor[0] == -1)
+	if ((inst->texture).floor[0] == -1)
 		put_error("MISSING FLOOR COLOR");
 	printf("VALIDATION COMPLETE!\n");
 	close(fd);
-	free_map(map);
+	free_instance(inst);
+	return (0);
 }
 
-int	is_map_filled (t_map **map, int flag)
+int	is_map_filled(t_texture *texture, int flag)
 {
 	if (flag != 0)
 		return (1);
-	if (!(*map)->no_texture || !(*map)->so_texture
-		|| !(*map)->we_texture || !(*map)->ea_texture
-			|| (*map)->floor[0] == -1 || (*map)->ceiling[0] == -1)
+	if (!texture->north_path || !texture->south_path
+		|| !texture->west_path || !texture->east_path
+			|| texture->floor[0] == -1 || texture->ceiling[0] == -1)
 		return (0);
 	return (1);
 }

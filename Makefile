@@ -67,7 +67,8 @@ assert-map:
 		fi \
 
 testing:
-	$(COMPILER) ./srcs/testing/testing.c $(MINILIBX_A) $(MINILIBX_ARGS) $(LIBFT_A) -o testing_$(NAME)
+	$(COMPILER) -c ./srcs/testing/testing.c -o $(DIR_OBJS)/testing.o
+	$(COMPILER) $(DIR_OBJS)/testing.o $(MINILIBX_A) $(MINILIBX_ARGS) $(LIBFT_A) -o testing_$(NAME)
 	./testing_$(NAME)
 clean:
 	$(RM) $(DIR_OBJS)

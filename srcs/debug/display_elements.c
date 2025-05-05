@@ -43,12 +43,12 @@ void	display_map_visual(int **arr, int reading_limit)
 
 void	printing_coordinates(t_flood *vectors)
 {
-	int i;
+	// int i;
 
-	i = 0;
+	// i = 0;
 	while (vectors != NULL)
 	{
-		printf("iter nbr: %d | x : %d and y: %d\n", i, vectors->vector[1], vectors->vector[0]);
+		// printf("iter nbr: %d | x : %d and y: %d\n", i, vectors->vector[1], vectors->vector[0]);
 		vectors = vectors->next;
 	}
 

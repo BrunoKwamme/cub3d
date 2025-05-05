@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:33:15 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/03/20 00:53:35 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/04 16:32:30 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,31 +50,31 @@ void	realloc_line(int *old_line, int **new_line)
 	(*new_line)[i] = LIMIT_INT_STD;
 }
 
-void realloc_and_fill(t_map **map, int *new_lines)
+void realloc_and_fill(t_map *map, int *new_lines)
 {
 	int	**temp_int;
 	int	i;
 	int	new_map;
 
-	new_map = get_size_map((*map)->map_layout) + 2;
+	new_map = get_size_map((map)->map_layout) + 2;
 	temp_int = (int **)malloc(sizeof(int *) * (new_map + 1));
 	i = 0;
-	while ((*map)->map_layout && (*map)->map_layout[i] != NULL)
+	while ((map)->map_layout && (map)->map_layout[i] != NULL)
 	{
-		realloc_line((*map)->map_layout[i], &temp_int[i]);
+		realloc_line((map)->map_layout[i], &temp_int[i]);
 		i++;
 	}
 	realloc_line(new_lines, &temp_int[i]);
 	temp_int[i + 1] = NULL;
-	free_int_arr((*map)->map_layout);
-	(*map)->map_layout = (int **)malloc(sizeof(int *) * new_map);
+	free_int_arr((map)->map_layout);
+	(map)->map_layout = (int **)malloc(sizeof(int *) * new_map);
 	i = 0;
 	while (temp_int[i] != NULL)
 	{
-		realloc_line(temp_int[i], &(*map)->map_layout[i]);
+		realloc_line(temp_int[i], &(map)->map_layout[i]);
 		i++;
 	}
-	(*map)->map_layout[i] = NULL;
+	(map)->map_layout[i] = NULL;
 	free_int_arr(temp_int);
 }
 

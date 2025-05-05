@@ -1,39 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc_and_free.c                                  :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 10:47:42 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/03/13 10:31:57 by gabrfern         ###   ########.fr       */
+/*   Created: 2025/05/04 13:13:34 by gabrfern          #+#    #+#             */
+/*   Updated: 2025/05/04 19:41:34 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	malloc_map(t_map **map)
-{
-	*map = malloc(sizeof(t_map) * 1);
-	(*map)->map_layout = NULL;
-	(*map)->no_texture = NULL;
-	(*map)->so_texture = NULL;
-	(*map)->we_texture = NULL;
-	(*map)->ea_texture = NULL;
-	(*map)->floor[0] = -1;
-	(*map)->floor[1] = -1;
-	(*map)->floor[2] = -1;
-	(*map)->ceiling[0] = -1;
-	(*map)->ceiling[1] = -1;
-	(*map)->ceiling[2] = -1;
-	(*map)->person_pos[0] = -1;
-	(*map)->person_pos[1] = -1;
-
-}
-
 void	free_str(char **str)
 {
 	if (!str)
+		return ;
+	if (!(*str))
 		return ;
 	free(*str);
 	*str = NULL;
@@ -78,29 +61,26 @@ void	free_int_arr(int **arr)
 	arr = NULL;
 }
 
-void	free_colors_args(int (*arr)[3])
+void	free_textures(t_texture *textures)
 {
-	int	i;
-
-	if (!arr)
-		return ;
-	i = 0;
-	while (arr[i] != NULL)
-	{
-		free_int(arr[i]);
-		i++;
-	}
-	free(arr);
-	arr = NULL;
+	free_str(&(textures->north_path));
+	free_str(&(textures->south_path));
+	free_str(&(textures->east_path));
+	free_str(&(textures->west_path));
+	textures = NULL;
 }
 
-void	free_map(t_map **map)
+void	free_map(t_map *map)
 {
-	free_str(&(*map)->no_texture);
-	free_str(&(*map)->so_texture);
-	free_str(&(*map)->we_texture);
-	free_str(&(*map)->ea_texture);
-	free_int_arr((*map)->map_layout);
-	free(*map);
-	*map = NULL;
+	free_int_arr((map)->map_layout);
+	map = NULL;
+}
+
+void	free_instance(t_instance *inst)
+{
+	if (&(inst->map))
+		free_map(&(inst->map));
+	if (&(inst->texture))
+		free_textures(&(inst->texture));
+	free_int_arr(inst->texts_buffer);
 }
