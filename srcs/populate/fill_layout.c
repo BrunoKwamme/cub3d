@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:23:48 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/05/04 16:34:06 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/05 02:10:57 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	map_max_hsize(int **arr)
 			max_v = temp_v;
 		i++;
 	}
-	printf("Max SIZE is: %d\n",max_v);
+	// printf("Max SIZE is: %d\n",max_v);
 	return (max_v);
 }
 

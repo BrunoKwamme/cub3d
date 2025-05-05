@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 09:58:00 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/05/04 19:24:10 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/05 02:12:35 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,17 @@ int argument_val(char **argv)
 
 int	validation_error(int fd, t_instance *inst)
 {
-	if (!(inst->texture).east_path)
+	if (!inst->texture.east_path)
 		put_error("MISSING EAST TEXTURE");
-	if (!(inst->texture).north_path)
+	if (!inst->texture.north_path)
 		put_error("MISSING NORTH TEXTURE");
-	if (!(inst->texture).west_path)
+	if (!inst->texture.west_path)
 		put_error("MISSING WEST TEXTURE");
-	if (!(inst->texture).south_path)
+	if (!inst->texture.south_path)
 		put_error("MISSING SOUTH TEXTURE");
-	if ((inst->texture).ceiling[0] == -1)
+	if (inst->texture.ceiling[0] == -1)
 		put_error("MISSING CEILING COLOR");
-	if ((inst->texture).floor[0] == -1)
+	if (inst->texture.floor[0] == -1)
 		put_error("MISSING FLOOR COLOR");
 	printf("VALIDATION COMPLETE!\n");
 	close(fd);

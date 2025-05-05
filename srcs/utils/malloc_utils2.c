@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_trgb.c                                      :+:      :+:    :+:   */
+/*   malloc_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 13:14:47 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/05/05 01:04:50 by gabrfern         ###   ########.fr       */
+/*   Created: 2025/05/05 00:25:55 by gabrfern          #+#    #+#             */
+/*   Updated: 2025/05/05 00:26:43 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-unsigned long	rgb_to_hex(int *rgb_tab)
+void	init_raycast(t_ray *ray)
 {
-	unsigned long	result;
-	int				r;
-	int				g;
-	int				b;
-
-	r = rgb_tab[0];
-	g = rgb_tab[1];
-	b = rgb_tab[2];
-	result = ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
-	return (result);
+	ray->camera_x = 0;
+	ray->dir_x = 0;
+	ray->dir_y = 0;
+	ray->map_x = 0;
+	ray->map_y = 0;
+	ray->step_x = 0;
+	ray->step_y = 0;
+	ray->sidedist_x = 0;
+	ray->sidedist_y = 0;
+	ray->deltadist_x = 0;
+	ray->deltadist_y = 0;
+	ray->wall_dist = 0;
+	ray->wall_x = 0;
+	ray->side = 0;
+	ray->line_height = 0;
+	ray->draw_start = 0;
+	ray->draw_end = 0;
 }

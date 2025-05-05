@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:14:04 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/05/04 20:33:08 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/05 02:12:02 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ int	flood_fill(t_map *map)
 	pos = get_position_vector(map, STAGING);
 	map->person_pos[0] = pos[0];
 	map->person_pos[1] = pos[1];
-	printf("PRINTING POS VECTOR\n");
-	printing_nbr_arr(pos, LIMIT_INT_STD);
+	// printf("PRINTING POS VECTOR\n");
+	// printing_nbr_arr(pos, LIMIT_INT_STD);
 	// display_map_visual(map->map_layout, LIMIT_INT_STD);
 	res = do_flood_fill(pos, map->map_layout, max_sz);
 

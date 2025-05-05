@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:33:15 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/05/04 16:32:30 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/05 02:11:10 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	*get_position_vector(t_map *map, int is_staging)
 		{
 			if (vector_cp[pos_y][pos_x] > is_staging + 1)
 			{
-				printf("MAJOR THAN ONE - pos x is: %d and pos y is: %d\n", pos_x, pos_y);
+				// printf("MAJOR THAN ONE - pos x is: %d and pos y is: %d\n", pos_x, pos_y);
 				result[0] = pos_y;
 				result[1] = pos_x;
 				result[2] = LIMIT_INT_STD;

@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:07:29 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/05/04 20:14:25 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/05 02:49:15 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <math.h>
 # include "libft/includes/libft.h"
 # include "../minilibx/mlx.h"
 
@@ -84,8 +85,6 @@ typedef struct s_map
 {
 	int		**map_layout;
 	int		person_pos[2];
-	int		floor[4];
-	int		ceiling[4];
 	int		horizontal_size;
 	int		vertical_size;
 }				t_map;
@@ -129,6 +128,7 @@ typedef struct	s_instance
 	int			win_height;
 	int			win_width;
 	int			**texts_buffer;
+	int			**screen_pixels;
 	t_map		map;
 	t_scene		scene;
 	t_texture	texture;
@@ -166,12 +166,12 @@ enum TextureDirection
 	WE_TEXTURE
 };
 
-int	read_document(char *argv, t_instance *inst);
+int		read_document(char *argv, t_instance *inst);
 int		is_map_filled (t_texture *texture, int flag);
-int		populate_textures(t_texture *texture, char *map_input);
+int		populate_textures(t_instance *inst, char *map_input);
 
 //validation
-int	validation_error(int fd, t_instance *inst);
+int		validation_error(int fd, t_instance *inst);
 int 	argument_val(char **argv);
 
 //map
@@ -192,10 +192,11 @@ t_flood	*create_flood_vector(int *vector, t_flood *head);
 void	new_node_flood(t_flood **new_vec, int *vector);
 
 //utils
-int		*get_position_vector(t_map *map, int is_staging);
-int		map_max_hsize(int **arr);
-int		put_error(char	*error_msg);
-int		line_empty(char *map_info);
+int				*get_position_vector(t_map *map, int is_staging);
+int				map_max_hsize(int **arr);
+int				put_error(char	*error_msg);
+int				line_empty(char *map_info);
+unsigned long	rgb_to_hex(int *rgb_tab);
 
 //free utils
 void 	free_flood_vector(t_flood **erase);
@@ -207,9 +208,11 @@ void	free_instance(t_instance *inst);
 
 //malloc utils
 void	init_scene(t_scene *scene);
+void	set_player_prop(t_instance *inst);
 void	set_instance(t_instance *instance);
 
 //debug functions to exclude
+void	print_ray(t_ray *ray);
 void	printing_arr(char **arr);
 void	printing_nbr_arr(int *arr, int reading_limit);
 void	printing_nbr_mult_arr(int **arr, int reading_limit);
@@ -217,13 +220,23 @@ void	display_map_visual(int **arr, int reading_limit);
 void	printing_coordinates(t_flood *vectors);
 
 //GRAPHIC SECTION
-
 //TEXTURES
 void	load_texture_buffer(t_instance *inst);
+void	update_texture_pixels(t_instance *inst, t_texture *tex, t_ray *ray, int x);
 int		*cub_xpm_to_img(t_instance *inst, char *path);
+void	gen_img_info(t_scene *img, t_instance *inst, char *path);
+void	set_new_img(t_instance *inst, t_scene *scene, int width, int height);
+void	set_image_pixel(t_scene *scene, int x, int y, int color);
 
 //RENDER EXECUTION
 void	set_render_info(t_instance *instance);
+void	render_images(t_instance *inst);
+void	set_screen_pixels(t_instance *inst);
+
+//RAYCAST FUNCTIONS
+void	init_raycast(t_ray *ray);
+void	render_raycast(t_instance *inst);
+int		raycast_apply(t_player *player, t_instance *inst);
 
 //graphic displays of the map
 // void	convert_arr_in_map(t_map **map, t_mlx_instance *mlx, t_scene *scene);

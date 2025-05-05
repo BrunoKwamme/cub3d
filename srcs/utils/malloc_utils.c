@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:47:42 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/05/04 19:54:20 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/05 01:58:36 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,10 @@ void	init_scene(t_scene *scene)
 static void	init_map(t_map *map)
 {
 	map->map_layout = NULL;
-	map->floor[0] = -1;
-	map->floor[1] = -1;
-	map->floor[2] = -1;
-	map->ceiling[0] = -1;
-	map->ceiling[1] = -1;
-	map->ceiling[2] = -1;
 	map->person_pos[0] = -1;
 	map->person_pos[1] = -1;
+	map->horizontal_size = 0;
+	map->vertical_size = 0;
 }
 
 static void	set_player(t_player *player)
@@ -79,6 +75,7 @@ void	set_instance(t_instance *instance)
 	instance->win_height = WIN_HEIGHT;
 	instance->win_width = WIN_WIDTH;
 	instance->texts_buffer = NULL;
+	instance->screen_pixels = NULL;
 	init_map(&instance->map);
 	init_scene(&instance->scene);
 	init_texture(&instance->texture);

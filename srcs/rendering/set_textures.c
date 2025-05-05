@@ -5,63 +5,86 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/04 18:47:45 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/05/04 20:21:03 by gabrfern         ###   ########.fr       */
+/*   Created: 2025/05/04 23:35:19 by gabrfern          #+#    #+#             */
+/*   Updated: 2025/05/05 03:17:41 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-
-void	gen_img_info(t_scene *img, t_instance *inst, char *path)
+void	set_screen_pixels(t_instance *inst)
 {
-
-	init_scene(img);
-	printf("ENTERED ON GENERATE IMAGE INFO\n");;
-	if (path != NULL)
-		img->img = mlx_xpm_file_to_image(inst->mlx, path, &inst->win_width, &inst->win_height);
-	if (img->img == NULL) //CREATE ERROR EXIT
-		return ;
-	img->img = (int *)mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->size_line, &img->endian);
-	return ;
+	int	i;
+	printf("SET SCREEN PIXELS\n");
+	if (inst->screen_pixels)
+		free_int_arr(inst->screen_pixels);
+	inst->screen_pixels = ft_calloc(inst->win_height + 1,
+			sizeof(inst->screen_pixels));
+	if (!(inst->screen_pixels))
+		return ; //CREATE ERROR EXIT
+	i = 0;
+	while (i < inst->win_height)
+	{
+		inst->screen_pixels[i] = ft_calloc(inst->win_width + 1,
+				sizeof(inst->screen_pixels));
+		if (!inst->screen_pixels[i])
+			return ;//CREATE ERROR EXIT;
+		i++;
+	}
+	printf("END OF FUNCTION\n*************************************\n");
 }
 
-int	*cub_xpm_to_img(t_instance *inst, char *path)
+static void	get_texture_index(t_instance *inst, t_ray *ray)
 {
-	t_scene txt_img;
-	int		*buff_result;
-	int		x;
-	int		y;
-
-	gen_img_info(&txt_img ,inst, path);
-	buff_result = ft_calloc(1,
-				sizeof(buff_result) * ((inst)->texture.size * (inst)->texture.size));
-	if (!buff_result) //CREATE ERROR EXIT
-		return (int *)0;
-	y = 0;
-	while (y < inst->texture.size)
+	if (ray->side == 0)
 	{
-		x = 0;
-		while (x < inst->texture.size)
-		{
-			buff_result[y * inst->texture.size + x]
-				= txt_img.int_addr[y * inst->texture.size + x];
-			++x;
-		}
+		if (ray->dir_x < 0)
+			inst->texture.index = WE_TEXTURE;
+		else
+			inst->texture.index = EA_TEXTURE;
+	}
+	else
+	{
+		if (ray->dir_y > 0)
+			inst->texture.index = SO_TEXTURE;
+		else
+			inst->texture.index = NO_TEXTURE;
+	}
+}
+
+void	update_texture_pixels(t_instance *inst, t_texture *tex, t_ray *ray, int x)
+{
+	int			y;
+	int			color;
+
+	get_texture_index(inst, ray);
+	tex->x = (int)(ray->wall_x * tex->size);
+	if ((ray->side == 0 && ray->dir_x < 0)
+	|| (ray->side == 1 && ray->dir_y > 0))
+	tex->x = tex->size - tex->x - 1;
+	tex->step = 1.0 * tex->size / ray->line_height;
+	tex->pos = (ray->draw_start - inst->win_height / 2
+		+ ray->line_height / 2) * tex->step;
+	y = ray->draw_start;
+
+	while (y < ray->draw_end)
+	{
+		tex->y = (int)tex->pos & (tex->size - 1);
+		tex->pos += tex->step;
+		color = inst->texts_buffer[tex->index][tex->size * tex->y + tex->x];
+		if (tex->index == NORTH || tex->index == EAST)
+			color = (color >> 1) & 8355711;
+		if (color > 0)
+			inst->screen_pixels[y][x] = color;
 		y++;
 	}
-	mlx_destroy_image(inst->mlx, txt_img.img);
-	return (buff_result);
+	printf("FINISHED UPDATE TEXTURE PIXELS\n");
 }
 
-void	load_texture_buffer(t_instance *inst)
+void	set_image_pixel(t_scene *scene, int x, int y, int color)
 {
-	inst->texts_buffer = ft_calloc(5, sizeof(inst->texts_buffer));
-	if (!inst->texts_buffer)
-		return ;
-	inst->texts_buffer[NO_TEXTURE] = cub_xpm_to_img(inst, inst->texture.north_path);
-	inst->texts_buffer[SO_TEXTURE] = cub_xpm_to_img(inst, inst->texture.south_path);
-	inst->texts_buffer[WE_TEXTURE] = cub_xpm_to_img(inst, inst->texture.west_path);
-	inst->texts_buffer[EA_TEXTURE] = cub_xpm_to_img(inst, inst->texture.east_path);
+	int	pixel;
 
+	pixel = y * (scene->size_line / 4) + x;
+	scene->int_addr[pixel] = color;
 }

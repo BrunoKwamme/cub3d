@@ -81,3 +81,26 @@ void	printing_nbr_arr(int *arr, int reading_limit)
 	}
 
 }
+
+void	print_ray(t_ray *ray)
+{
+	printf("INITIATING PRINT RAYCAST\n");
+	printf("Camera_x  : %lf\ndeltadistX : %lf\ndeltadistY : %lf\ndir_X : %lf\ndir_Y : %lf\nDraw_end : %d\nDraw_start : %d\nLineHeight : %d\nMap_X : %d\nMap_Y : %d\nSide : %d\nSideDist_X : %lf\nSideDist_Y : %lf\nStep_X : %d\nStep_Y : %d\nWall_DIST : %lf\nWall_X : %lf\n",
+		ray->camera_x,
+		ray->deltadist_x,
+		ray->deltadist_y,
+		ray->dir_x,
+		ray->dir_y,
+		ray->draw_end,
+		ray->draw_start,
+		ray->line_height,
+		ray->map_x,
+		ray->map_y,
+		ray->side,
+		ray->sidedist_x,
+		ray->sidedist_y,
+		ray->step_x,
+		ray->step_y,
+		ray->wall_dist,
+		ray->wall_x);
+}

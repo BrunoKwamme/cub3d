@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:24:20 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/05/04 20:38:25 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/05 02:16:42 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static int read_basic_info(int fd, t_instance *inst)
 	while (map_info)
 	{
 		if (verify_entering(flag, map_info))
-			populate_textures(&(inst)->texture, map_info);
-		flag += is_map_filled(&(inst)->texture, flag);
+			populate_textures(inst, map_info);
+		flag += is_map_filled(&inst->texture, flag);
 		if (flag > 0)
 		{
 			free_str(&map_info);
@@ -106,7 +106,10 @@ int	read_document(char *argv, t_instance *inst)
 		close(fd);
 		return (0);
 	}
+	inst->texture.hex_ceiling = rgb_to_hex(inst->texture.ceiling);
+	inst->texture.hex_floor = rgb_to_hex(inst->texture.floor);
+	set_player_prop(inst);
 	close(fd);
-	printf("passed basic info\n");
+	printf("passed basic info\n*****************************************\n");
 	return (1);
 }
