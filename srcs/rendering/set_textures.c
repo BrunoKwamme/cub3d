@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 23:35:19 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/05/05 03:17:41 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/07 23:54:17 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	set_screen_pixels(t_instance *inst)
 	inst->screen_pixels = ft_calloc(inst->win_height + 1,
 			sizeof(inst->screen_pixels));
 	if (!(inst->screen_pixels))
-		return ; //CREATE ERROR EXIT
+		quit_application(inst);
 	i = 0;
 	while (i < inst->win_height)
 	{
 		inst->screen_pixels[i] = ft_calloc(inst->win_width + 1,
 				sizeof(inst->screen_pixels));
 		if (!inst->screen_pixels[i])
-			return ;//CREATE ERROR EXIT;
+			quit_application(inst);
 		i++;
 	}
 	printf("END OF FUNCTION\n*************************************\n");

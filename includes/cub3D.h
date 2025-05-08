@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:07:29 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/05/05 02:49:15 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/08 00:18:41 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <math.h>
+# include <X11/keysym.h>
+# include <X11/X.h>
 # include "libft/includes/libft.h"
 # include "../minilibx/mlx.h"
 
@@ -30,17 +32,28 @@
 # endif
 
 #ifndef WIN_HEIGHT
-#define WIN_HEIGHT 1024
+#define WIN_HEIGHT 960
 # endif
 
 #ifndef WIN_WIDTH
-#define WIN_WIDTH 1860
+#define WIN_WIDTH 960
 # endif
 
 
 #ifndef TEXTURE_SIZE
 #define TEXTURE_SIZE 32
 # endif
+
+
+#ifndef MOVE_SPEED
+#define MOVE_SPEED 0.06
+# endif
+
+
+#ifndef ROT_SPEED
+#define ROT_SPEED 0.02
+# endif
+
 
 typedef struct s_ray
 {
@@ -199,15 +212,17 @@ int				line_empty(char *map_info);
 unsigned long	rgb_to_hex(int *rgb_tab);
 
 //free utils
-void 	free_flood_vector(t_flood **erase);
 void	free_int_arr(int **arr);
 void	free_str(char **str);
 void	free_str_arr(char **arr);
+void 	free_flood_vector(t_flood **erase);
 void	free_map(t_map *map);
+void	free_textures(t_texture *textures);
 void	free_instance(t_instance *inst);
-
+void	clean_exit(t_instance *inst, int exit_code);
 //malloc utils
 void	init_scene(t_scene *scene);
+int		quit_application(t_instance *inst);
 void	set_player_prop(t_instance *inst);
 void	set_instance(t_instance *instance);
 
@@ -230,13 +245,20 @@ void	set_image_pixel(t_scene *scene, int x, int y, int color);
 
 //RENDER EXECUTION
 void	set_render_info(t_instance *instance);
-void	render_images(t_instance *inst);
+int		render_images(t_instance *inst);
 void	set_screen_pixels(t_instance *inst);
+void	listen_for_input(t_instance *inst);
+int		hook_render(t_instance *inst);
 
 //RAYCAST FUNCTIONS
 void	init_raycast(t_ray *ray);
 void	render_raycast(t_instance *inst);
 int		raycast_apply(t_player *player, t_instance *inst);
+
+//MOVEMENT ARROUND THE MAP
+int		move_player(t_instance *inst);
+int		validate_move(t_instance *inst, double new_x, double new_y);
+int		rotate_player(t_instance *inst, double rotdir);
 
 //graphic displays of the map
 // void	convert_arr_in_map(t_map **map, t_mlx_instance *mlx, t_scene *scene);

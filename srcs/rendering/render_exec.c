@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:52:53 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/05/05 03:58:09 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/08 00:17:40 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,6 @@ static void	render_frame(t_instance *inst)
 	printf("IMAGE ON WINDOW\n");
 }
 
-
-void	set_render_info(t_instance *instance)
-{
-	instance->mlx = mlx_init();
-	instance->win = mlx_new_window(instance->mlx, instance->win_width, instance->win_height, "Cub3d");
-
-	printf("INITIATED MLX\n");
-	load_texture_buffer(instance);
-}
-
 void	render_raycast(t_instance *inst)
 {
 	set_screen_pixels(inst);
@@ -68,9 +58,17 @@ void	render_raycast(t_instance *inst)
 
 }
 
-void	render_images(t_instance *inst)
+int	render_images(t_instance *inst)
 {
 	render_raycast(inst);
+	return (1);
 }
 
-
+int	hook_render(t_instance *inst)
+{
+	inst->player.has_moved += move_player(inst);
+	if (inst->player.has_moved == 0)
+		return (0);
+	render_raycast(inst);
+	return (1);
+}

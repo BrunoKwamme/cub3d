@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:47:11 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/05/05 03:38:33 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/08 00:19:01 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	main(int argc, char **argv)
 		printf("WIN WIDTH : %d | WIN HEIGTH : %d\n", instance.win_width, instance.win_height);
 		set_render_info(&instance);
 		render_images(&instance);
-
+		listen_for_input(&instance);
+		mlx_loop_hook(instance.mlx, hook_render, &instance);
 		mlx_loop(instance.mlx);
-		free_instance(&instance);
 	}
 	else
 		printf("An error occurred\n");

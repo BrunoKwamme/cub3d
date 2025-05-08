@@ -6,7 +6,7 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:47:45 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/05/05 03:46:16 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/08 00:18:07 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,8 @@ void	gen_img_info(t_scene *img, t_instance *inst, char *path)
 	printf("ENTERED ON GENERATE IMAGE INFO\n");;
 	if (path != NULL)
 		img->img = mlx_xpm_file_to_image(inst->mlx, path, &inst->texture.size, &inst->texture.size);
-	if (img->img == NULL) //CREATE ERROR EXIT
-	{
-		printf("ENTERED ON ERROR EXIT\n");
-		return ;
-	}
-
+	if (img->img == NULL)
+		quit_application(inst);
 	img->int_addr = (int *)mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->size_line, &img->endian);
 	printf("GENERATE IMAGE INFO ENDED\n");
 	return ;
@@ -34,7 +30,7 @@ void	set_new_img(t_instance *inst, t_scene *scene, int width, int height)
 	init_scene(scene);
 	scene->img = mlx_new_image(inst->mlx, width, height);
 	if (scene->img == NULL)
-		return ; //CREATE ERROR EXIT
+		quit_application(inst);
 	scene->int_addr = (int *)mlx_get_data_addr(scene->img, &scene->bits_per_pixel, &scene->size_line, &scene->endian);
 	return ;
 }
@@ -50,8 +46,8 @@ int	*cub_xpm_to_img(t_instance *inst, char *path)
 	gen_img_info(&txt_img ,inst, path);
 	buff_result = ft_calloc(1,
 				sizeof * buff_result * (inst)->texture.size * (inst)->texture.size);
-	if (!buff_result) //CREATE ERROR EXIT
-		return (int *)0;
+	if (!buff_result)
+		quit_application(inst);
 	y = 0;
 	while (y < inst->texture.size)
 	{
@@ -82,4 +78,13 @@ void	load_texture_buffer(t_instance *inst)
 	inst->texts_buffer[EA_TEXTURE] = cub_xpm_to_img(inst, inst->texture.east_path);
 	printf("EAST PATH ✅\n");
 	printf("PROCESS ENDED\n*************************************\n");
+}
+
+void	set_render_info(t_instance *instance)
+{
+	instance->mlx = mlx_init();
+	instance->win = mlx_new_window(instance->mlx, instance->win_width, instance->win_height, "Cub3d");
+
+	printf("INITIATED MLX\n");
+	load_texture_buffer(instance);
 }
