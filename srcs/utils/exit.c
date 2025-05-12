@@ -1,20 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_error.c                                        :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 12:33:45 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/05/04 18:05:27 by gabrfern         ###   ########.fr       */
+/*   Created: 2025/05/07 23:24:52 by gabrfern          #+#    #+#             */
+/*   Updated: 2025/05/07 23:58:58 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	put_error(char	*error_msg)
+void	clean_exit(t_instance *inst, int exit_code)
 {
-	ft_putendl_fd("Error", 2);
-	ft_putendl_fd(error_msg, 2);
+	if (!inst)
+		exit(exit_code);
+	if (inst->win && inst->mlx)
+		mlx_destroy_window(inst->mlx, inst->win);
+	if (inst->mlx)
+	{
+		mlx_destroy_display(inst->mlx);
+		mlx_loop_end(inst->mlx);
+		free(inst->mlx);
+	}
+	free_instance(inst);
+	exit(exit_code);
+}
+
+int	quit_application(t_instance *inst)
+{
+	clean_exit(inst, 0);
 	return (0);
 }

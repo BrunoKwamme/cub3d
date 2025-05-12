@@ -6,33 +6,22 @@
 /*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:14:47 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/03/06 22:06:02 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/05/05 01:04:50 by gabrfern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	create_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char b)
+unsigned long	rgb_to_hex(int *rgb_tab)
 {
-	return (*(int *)(unsigned char [4]){b, g, r, t});
-}
+	unsigned long	result;
+	int				r;
+	int				g;
+	int				b;
 
-unsigned char	get_t(int trgb)
-{
-	return (((unsigned char *)&trgb)[3]);
-}
-
-unsigned char	get_r(int trgb)
-{
-	return (((unsigned char *)&trgb)[2]);
-}
-
-unsigned char	get_g(int trgb)
-{
-	return (((unsigned char *)&trgb)[1]);
-}
-
-unsigned char	get_b(int trgb)
-{
-	return (((unsigned char *)&trgb)[0]);
+	r = rgb_tab[0];
+	g = rgb_tab[1];
+	b = rgb_tab[2];
+	result = ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
+	return (result);
 }
