@@ -181,11 +181,12 @@ enum TextureDirection
 
 int		read_document(char *argv, t_instance *inst);
 int		is_map_filled (t_texture *texture, int flag);
-int		populate_textures(t_instance *inst, char *map_input);
+int		populate_textures(t_instance *inst, char *map_input, int fd);
 
 //validation
 int		validation_error(t_instance *inst, int cubfd);
 int 	argument_val(char **argv);
+void	validate_player_dir(t_instance *inst, int fd);
 
 //map
 int		map_allocation(t_map *map, char *map_info);

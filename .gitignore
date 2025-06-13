@@ -5,3 +5,4 @@ a.out
 *.gch
 cub3D
 testing_cub3D
+logs/

@@ -55,7 +55,7 @@ static void	processe_numbers(char *dir, int (*element)[], char *map_input)
 	free_str_arr(splited_nbs);
 }
 
-int	populate_textures(t_instance *inst, char *map_input)
+int	populate_textures(t_instance *inst, char *map_input, int fd)
 {
 	char *temp_str;
 	t_texture *texture;
@@ -76,6 +76,9 @@ int	populate_textures(t_instance *inst, char *map_input)
 		processe_numbers("C", &(texture->ceiling), temp_str);
 	else
 	{
+		printf("BLABLABLA");
+		if (!is_map_filled(&inst->texture, 0))
+			put_error("ARGUMENTS ARE NOT IN ORDER!", &inst, fd);
 		free_str(&temp_str);
 		return (1);
 	}

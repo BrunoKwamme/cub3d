@@ -30,6 +30,12 @@ static int	verify_entering(int flag, char *map_input)
 {
 	if (flag == 0 && (map_input &&
 		(ft_strnstr(map_input, "NO", ft_strlen(map_input)) != NULL
+		|| ft_strnstr(map_input, "1", ft_strlen(map_input)) != NULL
+		|| ft_strnstr(map_input, "0", ft_strlen(map_input)) != NULL
+		|| ft_strnstr(map_input, "S", ft_strlen(map_input)) != NULL
+		|| ft_strnstr(map_input, "N", ft_strlen(map_input)) != NULL
+		|| ft_strnstr(map_input, "W", ft_strlen(map_input)) != NULL
+		|| ft_strnstr(map_input, "E", ft_strlen(map_input)) != NULL
 			|| ft_strnstr(map_input, "SO", ft_strlen(map_input)) != NULL
 				|| ft_strnstr(map_input, "WE", ft_strlen(map_input)) != NULL
 					|| ft_strnstr(map_input, "EA", ft_strlen(map_input)) != NULL
@@ -49,7 +55,7 @@ static int read_basic_info(int fd, t_instance *inst)
 	while (map_info)
 	{
 		if (verify_entering(flag, map_info))
-			populate_textures(inst, map_info);
+			populate_textures(inst, map_info, fd);
 		flag += is_map_filled(&inst->texture, flag);
 		if (flag > 0)
 		{
@@ -99,6 +105,7 @@ int	read_document(char *argv, t_instance *inst)
 	read_basic_info(fd, inst);
 	validation_error(inst, fd);
 	read_map_info(fd, &(inst->map));
+	validate_player_dir(inst, fd);
 	if (flood_fill(&(inst->map)) == -1)
 	{
 		put_error("MAP DIDN't passed flood fill", NULL, fd);

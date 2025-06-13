@@ -117,18 +117,18 @@ int		raycast_apply(t_player *player, t_instance *inst)
 	{
 		printf("X is -> %d and win_width -> %d\n", x, inst->win_width);
 		init_raycasting_info(x, &ray, player);
-		printf("INIT RAYCAST ✅\n");
+		// printf("INIT RAYCAST ✅\n");
 		set_dda(&ray, player);
-		printf("SET DDA ✅\n");
+		// printf("SET DDA ✅\n");
 		perform_dda(inst, &ray);
-		printf("PERFORM DDA ✅\n");
+		// printf("PERFORM DDA ✅\n");
 		calculate_line_height(&ray, inst, player);
-		printf("PERFORM CALCULATE LINE HEIGHT ✅\n");
+		// printf("PERFORM CALCULATE LINE HEIGHT ✅\n");
 		update_texture_pixels(inst, &inst->texture, &ray, x);
-		printf("UPDATE TEXTURE PIXELS ✅\n");
-		printf("*****************PRINT RAY IS*****************\n");
-		print_ray(&ray);
-		printf("********************************************\n");
+		// printf("UPDATE TEXTURE PIXELS ✅\n");
+		// printf("*****************PRINT RAY IS*****************\n");
+		// print_ray(&ray);
+		// printf("********************************************\n");
 		x++;
 	}
 	printf("FINISHED RAYCAST APPLY\n");

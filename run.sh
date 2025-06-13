@@ -35,7 +35,7 @@ bla=1
 for item in "${maps[@]}"; do
    # ./cub3D "$item" | grep "map is" > log_"$bla" && ./cub3D "$item" ; echo $? >> log_"$bla"
    	mapname=$(basename "$item")
-	./cub3D "$item" | grep "map is" > "log_$mapname" && ./cub3D "$item"; status=$?; if [ "$status" -eq 2 ]; then echo -e "Validação deu certo\t" >> "log_$mapname"; elif [ "$status" -eq 0 ]; then echo -e "Validação deu errado\t" >> "log_$mapname"; else echo "Código de saída: $status" >> "log_$mapname"; fi
+	./cub3D "$item" | grep "map is" > "logs/log_$mapname" && ./cub3D "$item"; status=$?; if [ "$status" -eq 2 ]; then echo -e "Validação deu certo\t" >> "logs/log_$mapname"; elif [ "$status" -eq 0 ]; then echo -e "Validação deu errado\t" >> "logs/err_log_$mapname"; else echo "Código de saída: $status" >> "logs/att_log_$mapname"; fi
 	((bla++))
 
 done
