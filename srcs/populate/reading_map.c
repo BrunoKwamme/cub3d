@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
+/*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:24:20 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/05/05 02:16:42 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/06/12 20:03:32 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,14 @@ int	read_document(char *argv, t_instance *inst)
 
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
-		return (put_error("BAD FD"));
-	if (read_basic_info(fd, inst) == 0 || read_map_info(fd, &(inst->map)) == 0)
-			return (validation_error(fd, inst));
-
+		return (put_error("BAD FD", &inst, fd));
+	read_basic_info(fd, inst);
+	validation_error(inst, fd);
+	read_map_info(fd, &(inst->map));
 	if (flood_fill(&(inst->map)) == -1)
 	{
-		put_error("MAP DIDN't passed flood fill");
+		put_error("MAP DIDN't passed flood fill", NULL, fd);
 		free_map(&(inst->map));
-		close(fd);
 		return (0);
 	}
 	inst->texture.hex_ceiling = rgb_to_hex(inst->texture.ceiling);

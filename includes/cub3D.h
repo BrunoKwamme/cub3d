@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
+/*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:07:29 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/05/08 00:18:41 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/06/12 20:02:24 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ int		is_map_filled (t_texture *texture, int flag);
 int		populate_textures(t_instance *inst, char *map_input);
 
 //validation
-int		validation_error(int fd, t_instance *inst);
+int		validation_error(t_instance *inst, int cubfd);
 int 	argument_val(char **argv);
 
 //map
@@ -207,7 +207,7 @@ void	new_node_flood(t_flood **new_vec, int *vector);
 //utils
 int				*get_position_vector(t_map *map, int is_staging);
 int				map_max_hsize(int **arr);
-int				put_error(char	*error_msg);
+int				put_error(char	*error_msg, t_instance **inst, int cubfd);
 int				line_empty(char *map_info);
 unsigned long	rgb_to_hex(int *rgb_tab);
 
