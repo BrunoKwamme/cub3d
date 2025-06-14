@@ -27,7 +27,7 @@ static int set_map_vector(int **temp, char *line_fill, int i)
 	else if ((int)line_fill[i] - 48 != WALL && (int)line_fill[i] - 48 != GROUND)
 		return (0);
 	else
-		(*temp)[i] = (int)line_fill[i] - 38;
+		(*temp)[i] = (int)line_fill[i] - 38;		
 	return (1);
 }
 

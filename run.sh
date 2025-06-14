@@ -1,5 +1,5 @@
 #!/bin/bash
-maps=(
+bad=(
 	"srcs/maps/bad/color_invalid_rgb.cub"
 	"srcs/maps/bad/color_missing_ceiling_rgb.cub"
 	"srcs/maps/bad/color_missing.cub"
@@ -31,8 +31,28 @@ maps=(
 	"srcs/maps/bad/wall_hole_west.cub"
 	"srcs/maps/bad/wall_none.cub"
 )
+
+good=(
+	"srcs/maps/good/cheese_maze.cub"
+	"srcs/maps/good/creepy.cub"
+	"srcs/maps/good/dungeon.cub"
+	"srcs/maps/good/library.cub"
+	"srcs/maps/good/matrix.cub"
+	"srcs/maps/good/sad_face.cub"
+	"srcs/maps/good/square_map.cub"
+	"srcs/maps/good/subject_map.cub"
+	"srcs/maps/good/test_map_hole.cub"
+	"srcs/maps/good/test_map.cub"
+	"srcs/maps/good/test_pos_bottom.cub"
+	"srcs/maps/good/test_pos_left.cub"
+	"srcs/maps/good/test_pos_right.cub"
+	"srcs/maps/good/test_pos_top.cub"
+	"srcs/maps/good/test_textures.cub"
+	"srcs/maps/good/test_whitespace.cub"
+	"srcs/maps/good/works.cub"
+)
 bla=1
-for item in "${maps[@]}"; do
+for item in "${good[@]}"; do
    # ./cub3D "$item" | grep "map is" > log_"$bla" && ./cub3D "$item" ; echo $? >> log_"$bla"
    	mapname=$(basename "$item")
 	./cub3D "$item" | grep "map is" > "logs/log_$mapname" && ./cub3D "$item"; status=$?; if [ "$status" -eq 2 ]; then echo -e "Validação deu certo\t" >> "logs/log_$mapname"; elif [ "$status" -eq 0 ]; then echo -e "Validação deu errado\t" >> "logs/err_log_$mapname"; else echo "Código de saída: $status" >> "logs/att_log_$mapname"; fi

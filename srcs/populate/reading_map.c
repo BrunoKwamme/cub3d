@@ -84,7 +84,6 @@ static int	read_map_info(int fd, t_map *map)
 	}
 	while (map_info && !(line_empty(map_info)))
 	{
-		// printf("PRINTING MAP INFORMATION -> %s\n", map_info);
 		if (map_allocation(map, map_info) == 0)
 		{
 			free_str(&map_info);
@@ -107,7 +106,8 @@ int	read_document(char *argv, t_instance *inst)
 		return (put_error("BAD FD", &inst, fd));
 	read_basic_info(fd, inst);
 	validation_error(inst, fd);
-	read_map_info(fd, &(inst->map));
+	if (read_map_info(fd, &(inst->map)) == 0)
+		put_error("NON VALID VALUE IN MAP", &inst, fd);
 	validate_player_dir(inst, fd);
 	if (flood_fill(&(inst->map)) == -1)
 	{
