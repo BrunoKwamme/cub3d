@@ -59,7 +59,7 @@ int	populate_textures(t_instance *inst, char *map_input, int fd)
 {
 	char *temp_str;
 	t_texture *texture;
-
+	
 	texture = &inst->texture;
 	temp_str = ft_strtrim(map_input, "\n\t\v\f\r\b ");
 	if (!texture->east_path && ft_strncmp(temp_str, "EA", 2) == 0)
@@ -76,7 +76,6 @@ int	populate_textures(t_instance *inst, char *map_input, int fd)
 		processe_numbers("C", &(texture->ceiling), temp_str);
 	else
 	{
-		printf("BLABLABLA");
 		if (!is_map_filled(&inst->texture, 0))
 			put_error("ARGUMENTS ARE NOT IN ORDER!", &inst, fd);
 		free_str(&temp_str);

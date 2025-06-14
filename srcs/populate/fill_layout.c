@@ -63,16 +63,20 @@ static void fill_with_empty(int **line, int max_sz)
 	(*line)[i] = LIMIT_INT_STD;
 }
 
-void	turn_map_in_sqr(t_map *map)
+void	turn_map_in_sqr(t_map *map, int fd)
 {
 	int		i;
 	int		max_sz;
+	(void)fd;
 
 	max_sz = map_max_hsize((map)->map_layout);
 	(map)->horizontal_size = max_sz;
+	if (!(map)->map_layout)
+		put_error("MAP IS NULL", NULL, fd);
 	i = 0;
 	while ((map)->map_layout[i] != NULL)
 	{
+		printf("ENTROU AQUI\n");
 		if (int_arr_len((map)->map_layout[i], LIMIT_INT_STD) < max_sz)
 			fill_with_empty(&(map)->map_layout[i], max_sz);
 		i++;

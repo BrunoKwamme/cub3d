@@ -194,7 +194,7 @@ void	realloc_line(int *old_line, int **new_line);
 void 	realloc_and_fill(t_map *map, int *new_lines);
 int		int_arr_len(int *line, int delimiter);
 int		get_size_map(int **element);
-void	turn_map_in_sqr(t_map *map);
+void	turn_map_in_sqr(t_map *map, int fd);
 
 //flood fill algorithms
 int		flood_fill(t_map *map);

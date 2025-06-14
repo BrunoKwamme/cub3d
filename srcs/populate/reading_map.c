@@ -54,8 +54,10 @@ static int read_basic_info(int fd, t_instance *inst)
 	map_info = get_next_line(fd);
 	while (map_info)
 	{
+		printf("entrou no map info \n");
 		if (verify_entering(flag, map_info))
 			populate_textures(inst, map_info, fd);
+		printf("passou pelo populate textures info \n");
 		flag += is_map_filled(&inst->texture, flag);
 		if (flag > 0)
 		{
@@ -65,7 +67,8 @@ static int read_basic_info(int fd, t_instance *inst)
 		free_str(&map_info);
 		map_info = get_next_line(fd);
 	}
-	free_str(&map_info);
+	if (map_info)
+		free_str(&map_info);
 	return (0);
 }
 
@@ -91,7 +94,7 @@ static int	read_map_info(int fd, t_map *map)
 		map_info = get_next_line(fd);
 	}
 	free_str(&map_info);
-	turn_map_in_sqr(map);
+	turn_map_in_sqr(map, fd);
 	return (1);
 }
 

@@ -78,9 +78,9 @@ void	free_map(t_map *map)
 
 void	free_instance(t_instance *inst)
 {
-	if (&(inst->map))
-		free_map(&(inst->map));
-	if (&(inst->texture))
-		free_textures(&(inst->texture));
+	if (!inst)
+		return ;
+	free_map(&(inst->map));
+	free_textures(&(inst->texture));
 	free_int_arr(inst->texts_buffer);
 }
