@@ -6,13 +6,13 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:43:34 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/06/16 17:29:11 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/06/16 18:04:41 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	verify_map_conditions(t_instance *inst,
+void	verify_map_conditions(t_instance *inst,
 	int fd, int *player_encountered, int ver)
 {
 	int	hor;
@@ -27,9 +27,9 @@ int	verify_map_conditions(t_instance *inst,
 			&& (ver == 0 || hor == 0 || (ver + 1) == inst->map.vertical_size
 			|| (hor + 1) == inst->map.horizontal_size))
 			put_error("MAP ERROR", &inst, fd);
-		if (encountered_dir && player_encountered == 0)
+		if (encountered_dir && *player_encountered == 0)
 			*player_encountered = 1;
-		else if (encountered_dir && player_encountered == 1)
+		else if (encountered_dir && *player_encountered == 1)
 			put_error("DUPLICATED PLAYER POSITION\n", &inst, fd);
 		hor++;
 	}
@@ -37,17 +37,14 @@ int	verify_map_conditions(t_instance *inst,
 
 void	validate_player_dir(t_instance *inst, int fd)
 {
-	int	hor;
 	int	ver;
 	int	player_encountered;
-	int	encountered_dir;
 
-	encountered_dir = 0;
 	player_encountered = 0;
 	ver = 0;
 	while (ver < inst->map.vertical_size)
 	{
-		verify_map_conditions(inst, fd, player_encountered, ver);
+		verify_map_conditions(inst, fd, &player_encountered, ver);
 		ver++;
 	}
 	if (player_encountered == 0)

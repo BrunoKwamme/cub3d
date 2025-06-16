@@ -6,11 +6,23 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:05:53 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/06/16 16:41:02 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/06/16 17:59:23 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+static t_flood	*set_error_vector(t_flood **v_head)
+{
+	t_flood	*new_vector;
+	int		return_negative[2];
+
+	return_negative[0] = -1;
+	return_negative[1] = -1;
+	new_vector = create_flood_vector((int *)return_negative, NULL);
+	free_flood_vector(v_head);
+	return (new_vector);
+}
 
 t_flood	*process_spaces(t_flood *vectors, int **layout, int max_vector)
 {
