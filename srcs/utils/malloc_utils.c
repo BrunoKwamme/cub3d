@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
+/*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:47:42 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/05/05 01:58:36 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:25:09 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,4 @@ void	set_instance(t_instance *instance)
 	init_scene(&instance->scene);
 	init_texture(&instance->texture);
 	set_player(&instance->player);
-
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   basic_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
+/*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:33:15 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/05/05 02:11:10 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:04:23 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ int	get_size_map(int **element)
 	int	i;
 
 	i = 0;
-	// printf("ENTERING ON GETSIZEMAP\n");
 	if (!element)
 		return (0);
-	// printf("ELEMENT IS NOT NULL\n");
 	while (element[i] != NULL)
 		i++;
 	return (i);
@@ -33,7 +31,7 @@ int	int_arr_len(int *line, int delimiter)
 	i = 0;
 	while (line[i] != delimiter)
 		i++;
-	return i + 1;
+	return (i + 1);
 }
 
 void	realloc_line(int *old_line, int **new_line)
@@ -41,7 +39,8 @@ void	realloc_line(int *old_line, int **new_line)
 	int	i;
 
 	i = 0;
-	(*new_line) = (int *)malloc(sizeof(int) * int_arr_len(old_line, LIMIT_INT_STD));
+	(*new_line) = (int *)malloc(sizeof(int)
+			* int_arr_len(old_line, LIMIT_INT_STD));
 	while (old_line[i] != LIMIT_INT_STD)
 	{
 		(*new_line)[i] = old_line[i];
@@ -50,7 +49,7 @@ void	realloc_line(int *old_line, int **new_line)
 	(*new_line)[i] = LIMIT_INT_STD;
 }
 
-void realloc_and_fill(t_map *map, int *new_lines)
+void	realloc_and_fill(t_map *map, int *new_lines)
 {
 	int	**temp_int;
 	int	i;
@@ -80,7 +79,7 @@ void realloc_and_fill(t_map *map, int *new_lines)
 
 int	*get_position_vector(t_map *map, int is_staging)
 {
-	int pos_y;
+	int	pos_y;
 	int	pos_x;
 	int	**vector_cp;
 	int	*result;
@@ -88,14 +87,13 @@ int	*get_position_vector(t_map *map, int is_staging)
 	result = (int *)malloc(3 * sizeof(int));
 	vector_cp = map->map_layout;
 	pos_y = -1;
-	while(vector_cp[++pos_y] != NULL)
+	while (vector_cp[++pos_y] != NULL)
 	{
 		pos_x = 0;
 		while (vector_cp[pos_y][pos_x] != LIMIT_INT_STD)
 		{
 			if (vector_cp[pos_y][pos_x] > is_staging + 1)
 			{
-				// printf("MAJOR THAN ONE - pos x is: %d and pos y is: %d\n", pos_x, pos_y);
 				result[0] = pos_y;
 				result[1] = pos_x;
 				result[2] = LIMIT_INT_STD;
@@ -104,5 +102,5 @@ int	*get_position_vector(t_map *map, int is_staging)
 			pos_x++;
 		}
 	}
-	return (int *)(0);
+	return ((int *)0);
 }
