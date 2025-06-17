@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display_elements.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/17 18:44:45 by bkwamme           #+#    #+#             */
+/*   Updated: 2025/06/17 20:38:35 by bkwamme          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void	printing_arr(char **arr)
@@ -7,16 +19,15 @@ void	printing_arr(char **arr)
 	i = 0;
 	while (arr[i] != NULL)
 	{
-		printf("arr element is: %s\n",arr[i]);
+		printf("arr element is: %s\n", arr[i]);
 		i++;
 	}
-
 }
 
 void	display_map_visual(int **arr, int reading_limit)
 {
 	int	i_arr;
-	int i;
+	int	i;
 
 	i_arr = 0;
 	while (arr[i_arr] != NULL)
@@ -28,7 +39,7 @@ void	display_map_visual(int **arr, int reading_limit)
 				printf("\033[31m");
 			if (arr[i_arr][i] >= NORTH && arr[i_arr][i] <= WEST)
 				printf("\033[0;32m");
-			if(arr[i_arr][i] < 10 && arr[i_arr][i] > -1)
+			if (arr[i_arr][i] < 10 && arr[i_arr][i] > -1)
 				printf("%d   ", arr[i_arr][i]);
 			else
 				printf("%d  ", arr[i_arr][i]);
@@ -38,19 +49,12 @@ void	display_map_visual(int **arr, int reading_limit)
 		printf("\n");
 		i_arr++;
 	}
-
 }
 
 void	printing_coordinates(t_flood *vectors)
 {
-	// int i;
-
-	// i = 0;
 	while (vectors != NULL)
-	{
-		// printf("iter nbr: %d | x : %d and y: %d\n", i, vectors->vector[1], vectors->vector[0]);
 		vectors = vectors->next;
-	}
 
 }
 

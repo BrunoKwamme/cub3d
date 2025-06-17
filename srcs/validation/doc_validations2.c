@@ -6,7 +6,7 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:43:34 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/06/16 18:04:41 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/06/17 20:48:52 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,16 @@ void	verify_map_conditions(t_instance *inst,
 	hor = 0;
 	while (hor < inst->map.horizontal_size)
 	{
-		encountered_dir = inst->map.map_layout[ver][hor] >= NORTH + STAGING;
-		if ((encountered_dir >= 1
-				|| inst->map.map_layout[ver][hor] == GROUND_STG)
-			&& (ver == 0 || hor == 0 || (ver + 1) == inst->map.vertical_size
-			|| (hor + 1) == inst->map.horizontal_size))
+		encountered_dir = inst->map.map_layout[ver][hor] >= NORTH &&
+			inst->map.map_layout[ver][hor] <= WEST;
+		 if ((encountered_dir >= 1
+		 		|| inst->map.map_layout[ver][hor] == GROUND)
+		 	&& (ver == 0 || hor == 0 || (ver + 1) == inst->map.vertical_size
+		|| (hor + 1) == inst->map.horizontal_size))
+		{
 			put_error("MAP ERROR", &inst, fd);
+		}
+
 		if (encountered_dir && *player_encountered == 0)
 			*player_encountered = 1;
 		else if (encountered_dir && *player_encountered == 1)

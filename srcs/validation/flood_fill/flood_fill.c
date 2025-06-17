@@ -6,7 +6,7 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:14:04 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/06/16 16:42:36 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/06/17 20:38:11 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,13 @@ int	verify_around(int **layout, int *vector, int max_vector, t_flood **new_vec)
 	(void)max_vector;
 	count = 0;
 	count += verify_vector(layout, vector[0], vector[1], new_vec);
-	count += verify_vector(layout, vector[0], vector[1] - 1, new_vec);
-	count += verify_vector(layout, vector[0], vector[1] + 1, new_vec);
 	count += verify_vector(layout, vector[0] + 1, vector[1], new_vec);
 	count += verify_vector(layout, vector[0] - 1, vector[1], new_vec);
-	count += verify_vector(layout, vector[0] - 1, vector[1] - 1, new_vec);
-	count += verify_vector(layout, vector[0] + 1, vector[1] + 1, new_vec);
-	count += verify_vector(layout, vector[0] + 1, vector[1] - 1, new_vec);
-	count += verify_vector(layout, vector[0] - 1, vector[1] + 1, new_vec);
-	if (count < 9)
+	count += verify_vector(layout, vector[0], vector[1] + 1, new_vec);
+	count += verify_vector(layout, vector[0], vector[1] - 1, new_vec);
+	printf("\n\nPrinting Vectors: x is %d y is %d\n", vector[1], vector[0]);
+	display_map_visual(layout, LIMIT_INT_STD);
+	if (count < 5)
 		return (-1);
 	if ((*new_vec) != NULL)
 		return (1);

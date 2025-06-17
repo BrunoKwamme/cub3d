@@ -6,7 +6,7 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:05:53 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/06/16 17:59:23 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/06/17 19:54:27 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_flood	*process_spaces(t_flood *vectors, int **layout, int max_vector)
 		vectors = vectors->next;
 	}
 	free_flood_vector(&head);
-	printing_coordinates(new_zeros);
 	return (new_zeros);
 }
 
