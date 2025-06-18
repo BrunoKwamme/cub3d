@@ -6,7 +6,7 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:23:48 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/06/16 16:22:56 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/06/17 21:39:07 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	turn_map_in_sqr(t_map *map, int fd)
 
 	(void)fd;
 	max_sz = map_max_hsize((map)->map_layout);
-	(map)->horizontal_size = max_sz;
+	(map)->hor_size = max_sz;
 	if (!(map)->map_layout)
 		put_error("MAP IS NULL", NULL, fd);
 	i = 0;
@@ -86,5 +86,5 @@ void	turn_map_in_sqr(t_map *map, int fd)
 			fill_with_empty(&(map)->map_layout[i], max_sz);
 		i++;
 	}
-	(map)->vertical_size = i;
+	(map)->ver_size = i;
 }

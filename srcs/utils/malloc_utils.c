@@ -6,7 +6,7 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:47:42 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/06/16 16:25:09 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/06/17 21:39:07 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void	init_map(t_map *map)
 	map->map_layout = NULL;
 	map->person_pos[0] = -1;
 	map->person_pos[1] = -1;
-	map->horizontal_size = 0;
-	map->vertical_size = 0;
+	map->hor_size = 0;
+	map->ver_size = 0;
 }
 
 static void	set_player(t_player *player)

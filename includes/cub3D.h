@@ -6,7 +6,7 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:07:29 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/06/17 21:09:46 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/06/17 21:39:07 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ typedef struct s_map
 {
 	int		**map_layout;
 	int		person_pos[2];
-	int		horizontal_size;
-	int		vertical_size;
+	int		hor_size;
+	int		ver_size;
 }				t_map;
 
 typedef struct s_flood

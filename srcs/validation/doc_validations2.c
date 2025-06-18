@@ -6,7 +6,7 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:43:34 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/06/17 21:16:26 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/06/17 21:51:55 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 // 	int	encountered_dir;
 
 // 	hor = 0;
-// 	while (hor < inst->map.horizontal_size)
+// 	while (hor < inst->map.hor_size)
 // 	{
 // 		encountered_dir = inst->map.map_layout[ver][hor] >= NORTH &&
 // 			inst->map.map_layout[ver][hor] <= WEST;
 // 		 if ((encountered_dir >= 1
 // 		 		|| inst->map.map_layout[ver][hor] == GROUND)
-// 		 	&& (ver == 0 || hor == 0 || (ver + 1) == inst->map.vertical_size
-// 		|| (hor + 1) == inst->map.horizontal_size))
+// 		 	&& (ver == 0 || hor == 0 || (ver + 1) == inst->map.ver_size
+// 		|| (hor + 1) == inst->map.hor_size))
 // 		{
 // 			put_error("MAP ERROR", &inst, fd);
 // 		}
@@ -49,24 +49,22 @@ void	verify_map_conditions(t_instance *inst, int fd)
 	player_encountered = 0;
 	ver = 0;
 	printf("VALIDATE MAP CONDITION\n");
-	while (ver < inst->map.vertical_size)
+	while (ver < inst->map.ver_size)
 	{
 		hor = 0;
-		while (hor < inst->map.horizontal_size)
+		while (hor < inst->map.hor_size)
 		{
-			encountered_dir = inst->map.map_layout[ver][hor] >= NORTH &&
-				inst->map.map_layout[ver][hor] <= WEST;
-			if ((encountered_dir >= 1
-					|| inst->map.map_layout[ver][hor] == GROUND)
-				&& (ver == 0 || hor == 0 || (ver + 1) == inst->map.vertical_size
-			|| (hor + 1) == inst->map.horizontal_size))
+			encountered_dir = (inst->map.map_layout[ver][hor] >= NORTH
+					&& inst->map.map_layout[ver][hor] <= WEST);
+			if ((encountered_dir >= 1 || inst->map.map_layout[ver][hor]
+				== GROUND) && (ver == 0 || hor == 0 || (ver + 1)
+				== inst->map.ver_size || (hor + 1) == inst->map.hor_size))
 				put_error("MAP ERROR", &inst, fd);
 			hor++;
 		}
 		ver++;
 	}
 }
-
 
 void	validate_player_dir(t_instance *inst, int fd)
 {
@@ -76,25 +74,21 @@ void	validate_player_dir(t_instance *inst, int fd)
 	int	hor;
 
 	player_encountered = 0;
-	ver = 0;
-	printf("VALIDATE PLAYER DIR\n");
-	while (ver < inst->map.vertical_size)
+	ver = -1;
+	while (++ver < inst->map.ver_size)
 	{
-		hor = 0;
-		while (hor < inst->map.horizontal_size)
+		hor = -1;
+		while (++hor < inst->map.hor_size)
 		{
 			encountered_dir = inst->map.map_layout[ver][hor] >= NORTH + STAGING;
 			if (encountered_dir && player_encountered == 0)
 				player_encountered = 1;
 			else if (encountered_dir && player_encountered == 1)
 				put_error("DUPLICATED PLAYER POSITION\n", &inst, fd);
-			if (encountered_dir >= 1
-				&& (ver == 0 || hor == 0 || (ver + 1) == inst->map.vertical_size
-			|| (hor + 1) == inst->map.horizontal_size))
-				put_error("EU NÃO AGUENTO MAIS\n", &inst, fd);
-			hor++;
+			if (encountered_dir >= 1 && (ver == 0 || hor == 0 || (ver + 1)
+					== inst->map.ver_size || (hor + 1) == inst->map.hor_size))
+				put_error("MAP ERROR\n", &inst, fd);
 		}
-		ver++;
 	}
 	if (player_encountered == 0)
 		put_error("PLAYER NOT ENCOUNTERED", &inst, fd);

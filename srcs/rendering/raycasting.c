@@ -6,7 +6,7 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 23:26:23 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/06/16 16:21:15 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/06/17 21:39:07 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ static void	perform_dda(t_instance *inst, t_ray *ray)
 		}
 		if (ray->map_y < 0.25
 			|| ray->map_x < 0.25
-			|| ray->map_y > inst->map.vertical_size - 0.25
-			|| ray->map_x > inst->map.horizontal_size - 1.25)
+			|| ray->map_y > inst->map.ver_size - 0.25
+			|| ray->map_x > inst->map.hor_size - 1.25)
 			break ;
 		else if (inst->map.map_layout[ray->map_y][ray->map_x] > GROUND)
 			hit = 1;
