@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
+/*   By: gabrfern@student.42.rio <gabrfern@stude    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:07:29 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/06/17 21:39:07 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/06/17 22:46:40 by gabrfern@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,13 +227,8 @@ int		quit_application(t_instance *inst);
 void	set_player_prop(t_instance *inst);
 void	set_instance(t_instance *instance);
 
-//debug functions to exclude
-void	print_ray(t_ray *ray);
-void	printing_arr(char **arr);
-void	printing_nbr_arr(int *arr, int reading_limit);
-void	printing_nbr_mult_arr(int **arr, int reading_limit);
+//MAP VISUAL DISPOSITION
 void	display_map_visual(int **arr, int reading_limit);
-void	printing_coordinates(t_flood *vectors);
 
 //GRAPHIC SECTION
 //TEXTURES
