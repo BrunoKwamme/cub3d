@@ -6,7 +6,7 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:24:20 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/06/17 20:39:48 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/06/17 21:09:59 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	read_document(char *argv, t_instance *inst)
 	validation_error(inst, fd);
 	if (read_map_info(fd, &(inst->map)) == 0)
 		put_error("NON VALID VALUE IN MAP", &inst, fd);
+	validate_player_dir(inst, fd);
 	if (flood_fill(&(inst->map)) == -1)
 	{
 		display_map_visual((inst)->map.map_layout, LIMIT_INT_STD);
@@ -113,7 +114,7 @@ int	read_document(char *argv, t_instance *inst)
 		free_map(&(inst->map));
 		return (0);
 	}
-	validate_player_dir(inst, fd);
+	verify_map_conditions(inst, fd);
 	inst->texture.hex_ceiling = rgb_to_hex(inst->texture.ceiling);
 	inst->texture.hex_floor = rgb_to_hex(inst->texture.floor);
 	set_player_prop(inst);

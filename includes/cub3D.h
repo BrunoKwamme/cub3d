@@ -6,7 +6,7 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:07:29 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/06/17 20:32:31 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/06/17 21:09:46 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ int		populate_textures(t_instance *inst, char *map_input, int fd);
 int		validation_error(t_instance *inst, int cubfd);
 int 	argument_val(char **argv);
 void	validate_player_dir(t_instance *inst, int fd);
-
+void	verify_map_conditions(t_instance *inst, int fd);
 //map
 int		map_allocation(t_map *map, char *map_info);
 void	realloc_line(int *old_line, int **new_line);
