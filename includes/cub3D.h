@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
+/*   By: gabrfern@student.42.rio <gabrfern@stude    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 23:07:29 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/06/12 20:02:24 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/06/17 22:46:40 by gabrfern@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ typedef struct s_map
 {
 	int		**map_layout;
 	int		person_pos[2];
-	int		horizontal_size;
-	int		vertical_size;
+	int		hor_size;
+	int		ver_size;
 }				t_map;
 
 typedef struct s_flood
@@ -187,7 +187,7 @@ int		populate_textures(t_instance *inst, char *map_input, int fd);
 int		validation_error(t_instance *inst, int cubfd);
 int 	argument_val(char **argv);
 void	validate_player_dir(t_instance *inst, int fd);
-
+void	verify_map_conditions(t_instance *inst, int fd);
 //map
 int		map_allocation(t_map *map, char *map_info);
 void	realloc_line(int *old_line, int **new_line);
@@ -227,13 +227,8 @@ int		quit_application(t_instance *inst);
 void	set_player_prop(t_instance *inst);
 void	set_instance(t_instance *instance);
 
-//debug functions to exclude
-void	print_ray(t_ray *ray);
-void	printing_arr(char **arr);
-void	printing_nbr_arr(int *arr, int reading_limit);
-void	printing_nbr_mult_arr(int **arr, int reading_limit);
+//MAP VISUAL DISPOSITION
 void	display_map_visual(int **arr, int reading_limit);
-void	printing_coordinates(t_flood *vectors);
 
 //GRAPHIC SECTION
 //TEXTURES

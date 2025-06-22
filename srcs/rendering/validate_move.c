@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_move.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrfern <gabrfern@student.42.rio>         +#+  +:+       +#+        */
+/*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 22:47:08 by gabrfern          #+#    #+#             */
-/*   Updated: 2025/05/07 22:49:27 by gabrfern         ###   ########.fr       */
+/*   Updated: 2025/06/17 21:39:07 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static int	is_valid_pos_wall_collision(t_instance *inst, double x, double y)
 
 static int	is_valid_pos_in_map(t_instance *inst, double x, double y)
 {
-	if (x < 0.25 || x >= inst->map.horizontal_size - 1.25)
+	if (x < 0.25 || x >= inst->map.hor_size - 1.25)
 		return (0);
-	if (y < 0.25 || y >= inst->map.vertical_size - 0.25)
+	if (y < 0.25 || y >= inst->map.ver_size - 0.25)
 		return (0);
 	return (1);
 }

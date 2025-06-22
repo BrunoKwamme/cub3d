@@ -6,7 +6,7 @@
 /*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:24:20 by bkwamme           #+#    #+#             */
-/*   Updated: 2025/06/12 20:03:32 by bkwamme          ###   ########.fr       */
+/*   Updated: 2025/06/17 21:09:59 by bkwamme          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,36 +28,34 @@ int	line_empty(char *map_info)
 
 static int	verify_entering(int flag, char *map_input)
 {
-	if (flag == 0 && (map_input &&
-		(ft_strnstr(map_input, "NO", ft_strlen(map_input)) != NULL
-		|| ft_strnstr(map_input, "1", ft_strlen(map_input)) != NULL
-		|| ft_strnstr(map_input, "0", ft_strlen(map_input)) != NULL
-		|| ft_strnstr(map_input, "S", ft_strlen(map_input)) != NULL
-		|| ft_strnstr(map_input, "N", ft_strlen(map_input)) != NULL
-		|| ft_strnstr(map_input, "W", ft_strlen(map_input)) != NULL
-		|| ft_strnstr(map_input, "E", ft_strlen(map_input)) != NULL
-			|| ft_strnstr(map_input, "SO", ft_strlen(map_input)) != NULL
+	if (flag == 0 && (map_input
+			&& (ft_strnstr(map_input, "NO", ft_strlen(map_input)) != NULL
+				|| ft_strnstr(map_input, "1", ft_strlen(map_input)) != NULL
+				|| ft_strnstr(map_input, "0", ft_strlen(map_input)) != NULL
+				|| ft_strnstr(map_input, "S", ft_strlen(map_input)) != NULL
+				|| ft_strnstr(map_input, "N", ft_strlen(map_input)) != NULL
+				|| ft_strnstr(map_input, "W", ft_strlen(map_input)) != NULL
+				|| ft_strnstr(map_input, "E", ft_strlen(map_input)) != NULL
+				|| ft_strnstr(map_input, "SO", ft_strlen(map_input)) != NULL
 				|| ft_strnstr(map_input, "WE", ft_strlen(map_input)) != NULL
-					|| ft_strnstr(map_input, "EA", ft_strlen(map_input)) != NULL
-						|| ft_strnstr(map_input, "F", ft_strlen(map_input)) != NULL
-							|| ft_strnstr(map_input, "C", ft_strlen(map_input)) != NULL)))
+				|| ft_strnstr(map_input, "EA", ft_strlen(map_input)) != NULL
+				|| ft_strnstr(map_input, "F", ft_strlen(map_input)) != NULL
+				|| ft_strnstr(map_input, "C", ft_strlen(map_input)) != NULL)))
 		return (1);
 	return (0);
 }
 
-static int read_basic_info(int fd, t_instance *inst)
+static int	read_basic_info(int fd, t_instance *inst)
 {
-	char 	*map_info;
+	char	*map_info;
 	int		flag;
 
 	flag = 0;
 	map_info = get_next_line(fd);
 	while (map_info)
 	{
-		printf("entrou no map info \n");
 		if (verify_entering(flag, map_info))
 			populate_textures(inst, map_info, fd);
-		printf("passou pelo populate textures info \n");
 		flag += is_map_filled(&inst->texture, flag);
 		if (flag > 0)
 		{
@@ -111,14 +109,15 @@ int	read_document(char *argv, t_instance *inst)
 	validate_player_dir(inst, fd);
 	if (flood_fill(&(inst->map)) == -1)
 	{
+		display_map_visual((inst)->map.map_layout, LIMIT_INT_STD);
 		put_error("MAP DIDN't passed flood fill", NULL, fd);
 		free_map(&(inst->map));
 		return (0);
 	}
+	verify_map_conditions(inst, fd);
 	inst->texture.hex_ceiling = rgb_to_hex(inst->texture.ceiling);
 	inst->texture.hex_floor = rgb_to_hex(inst->texture.floor);
 	set_player_prop(inst);
 	close(fd);
-	printf("passed basic info\n*****************************************\n");
 	return (1);
 }

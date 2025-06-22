@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   texture_populate.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bkwamme <bkwamme@student.42.rio>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/16 15:00:31 by bkwamme           #+#    #+#             */
+/*   Updated: 2025/06/16 16:23:34 by bkwamme          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 static int	find_index(char *inner, char *str)
@@ -14,22 +26,19 @@ static int	find_index(char *inner, char *str)
 			i++;
 		return (i);
 	}
-
 	return (-1);
 }
 
-static char *processe_str(char *dir, char *map_input)
+static char	*processe_str(char *dir, char *map_input)
 {
-	char *processed_str;
-	int index_str;
+	char	*processed_str;
+	int		index_str;
 
 	processed_str = NULL;
-	// printf("GETTING %s of %s\n", dir, map_input);
 	index_str = find_index(dir, map_input);
 	if (index_str == -1)
-		return NULL;
+		return (NULL);
 	processed_str = ft_substr(map_input, index_str, ft_strlen(map_input));
-	printf("processed string is: %s\n", processed_str);
 	return (processed_str);
 }
 
@@ -39,15 +48,12 @@ static void	processe_numbers(char *dir, int (*element)[], char *map_input)
 	char	**splited_nbs;
 	int		i;
 
-	// printf("IN PROCESSE NUMBERS, map input is: %s\n", map_input);
 	i = 0;
 	processed_str = processe_str(dir, map_input);
 	splited_nbs = ft_split(processed_str, ',');
 	while (splited_nbs[i] != NULL && i < 3)
 	{
 		(*element)[i] = ft_atoi(splited_nbs[i]);
-		// printf("ELEMENT POSITION %d is: %d\n", i, (*element)[i]);
-
 		i++;
 	}
 	(*element)[i] = LIMIT_INT_STD;
@@ -55,18 +61,26 @@ static void	processe_numbers(char *dir, int (*element)[], char *map_input)
 	free_str_arr(splited_nbs);
 }
 
+int	verify_inst(t_instance *inst, char *temp_str, int fd)
+{
+	if (!is_map_filled(&inst->texture, 0))
+		put_error("ARGUMENTS ARE NOT IN ORDER!", &inst, fd);
+	free_str(&temp_str);
+	return (1);
+}
+
 int	populate_textures(t_instance *inst, char *map_input, int fd)
 {
-	char *temp_str;
-	t_texture *texture;
-	
+	char		*temp_str;
+	t_texture	*texture;
+
 	texture = &inst->texture;
 	temp_str = ft_strtrim(map_input, "\n\t\v\f\r\b ");
 	if (!texture->east_path && ft_strncmp(temp_str, "EA", 2) == 0)
 		texture->east_path = processe_str("EA", temp_str);
 	else if (!texture->north_path && ft_strncmp(temp_str, "NO", 2) == 0)
 		texture->north_path = processe_str("NO", temp_str);
-	else if (!texture->south_path  && ft_strncmp(temp_str, "SO", 2) == 0)
+	else if (!texture->south_path && ft_strncmp(temp_str, "SO", 2) == 0)
 		texture->south_path = processe_str("SO", temp_str);
 	else if (!texture->west_path && ft_strncmp(temp_str, "WE", 2) == 0)
 		texture->west_path = processe_str("WE", temp_str);
@@ -75,12 +89,7 @@ int	populate_textures(t_instance *inst, char *map_input, int fd)
 	else if (texture->ceiling[0] == -1 && ft_strncmp(temp_str, "C", 1) == 0)
 		processe_numbers("C", &(texture->ceiling), temp_str);
 	else
-	{
-		if (!is_map_filled(&inst->texture, 0))
-			put_error("ARGUMENTS ARE NOT IN ORDER!", &inst, fd);
-		free_str(&temp_str);
-		return (1);
-	}
+		return (verify_inst(inst, temp_str, fd));
 	free_str(&temp_str);
 	return (0);
 }

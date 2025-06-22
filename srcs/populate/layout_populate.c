@@ -12,7 +12,7 @@
 
 #include "cub3D.h"
 
-static int set_map_vector(int **temp, char *line_fill, int i)
+static int	set_map_vector(int **temp, char *line_fill, int i)
 {
 	if (ft_isspace(line_fill[i]))
 		(*temp)[i] = EMPTY;
@@ -27,7 +27,7 @@ static int set_map_vector(int **temp, char *line_fill, int i)
 	else if ((int)line_fill[i] - 48 != WALL && (int)line_fill[i] - 48 != GROUND)
 		return (0);
 	else
-		(*temp)[i] = (int)line_fill[i] - 38;		
+		(*temp)[i] = (int)line_fill[i] - 38;
 	return (1);
 }
 
@@ -51,7 +51,6 @@ static int	fill_line(int **temp, char *line_fill)
 	return (1);
 }
 
-
 int	map_allocation(t_map *map, char *map_info)
 {
 	int		*temp_convert;
@@ -62,7 +61,5 @@ int	map_allocation(t_map *map, char *map_info)
 		return (0);
 	realloc_and_fill(map, temp_convert);
 	free(temp_convert);
-
 	return (1);
-
 }

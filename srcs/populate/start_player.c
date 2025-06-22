@@ -36,7 +36,6 @@ static void	player_set_dir(t_player *player)
 	}
 	else
 		return ;
-
 }
 
 void	set_player_prop(t_instance *inst)
